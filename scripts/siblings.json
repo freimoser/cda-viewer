@@ -1,0 +1,8 @@
+{
+ "ldt-bdt-viewer": true,
+ "gdt-viewer": true,
+ "dicom-viewer": true,
+ "fhir-viewer": false,
+ "hl7v2-viewer": false,
+ "e-rechnung-klartext": true
+}
