@@ -12,7 +12,9 @@ export const SITE = {
   updatedDe: "27.10.2026",
   impressum: "https://freimoser.de/impressum/",
   author: { name: "Thomas Freimoser", url: "https://freimoser.de/", linkedin: "https://www.linkedin.com/in/thomas-freimoser/" },
-  flexchange: "https://flexchange-medical.de/products_flx-suite.php",
+  // Schalter für genau einen redaktionellen Fließtext-Link (derzeit AUS, bis die Formulierung freigegeben ist).
+  // Aktivieren: enabled auf true setzen und "html" mit der freigegebenen Formulierung füllen (genau ein <a>), dann neu bauen.
+  flexchange: { enabled: false, url: "https://flexchange-medical.de/products_flx-suite.php", html: "" },
 };
 
 export const url = (p = "") => SITE.origin + SITE.base + p;

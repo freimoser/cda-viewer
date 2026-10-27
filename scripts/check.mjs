@@ -57,7 +57,7 @@ for (const loc of locs) {
     if (/^\/cda-viewer\//.test(h)) { const rr = await fetch(ORIGIN + h.split("#")[0]); if (rr.status !== 200) err(`${loc}: Ressource ${h} → ${rr.status}`); }
   }
 }
-if (flex !== 1) err(`flexchange-Links: ${flex} (erwartet genau 1 im gesamten Auftritt)`);
+if (flex > 1) err(`flexchange-Links: ${flex} (erlaubt: 0 oder 1 im gesamten Auftritt)`);
 for (const f of ["robots.txt", "llms.txt", "c67e9b3d19be863e1c5ec56c3a89f916.txt", "site.webmanifest", "og-image.png", "favicon.ico", "404.html"]) {
   const r = await fetch(`${ORIGIN}/cda-viewer/${f}`); if (r.status !== 200 && f !== "404.html") err(`${f}: ${r.status}`);
 }
