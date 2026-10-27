@@ -35,11 +35,11 @@ const NAV = [
 /** Weitere Werkzeuge; Einträge mit `ok: false` werden nicht verlinkt (Build prüft per HTTP). */
 export function tools(status = {}) {
   const all = [
-    ["ldt-bdt-viewer", "LDT- und BDT-Dateien lesen", "Labordaten (LDT) und Praxisdaten-Exporte (BDT)."],
-    ["gdt-viewer", "GDT-Dateien anzeigen", "Geräte- und Praxis-Datenträger im GDT-Format."],
-    ["dicom-viewer", "DICOM-Bilder und Radiologie-CD öffnen", "Röntgen-, CT- und MRT-Bilder."],
-    ["fhir-viewer", "FHIR-Daten ansehen", "FHIR-Ressourcen und Bundles."],
-    ["hl7v2-viewer", "HL7-v2-Nachrichten lesen", "Nachrichten im Pipe-Format."],
+    ["ldt-bdt-viewer", "Laborbefunde (LDT) und BDT-Exporte durchblättern", "Labordaten und Praxisdaten-Exporte aus der Praxissoftware."],
+    ["gdt-viewer", "GDT-Datenträgerdateien aus Praxisgeräten anzeigen", "Austauschdateien zwischen Gerät und Praxisverwaltung."],
+    ["dicom-viewer", "Röntgen-, CT- und MRT-Bilder von CD betrachten", "Bilddateien im DICOM-Format."],
+    ["fhir-viewer", "FHIR-Bundles und Ressourcen durchsuchen", "JSON-Daten im FHIR-Format."],
+    ["hl7v2-viewer", "HL7-v2-Nachrichten Segment für Segment lesen", "Nachrichten im Pipe-Format."],
     ["e-rechnung-klartext", "XRechnung und ZUGFeRD lesen", "E-Rechnungen als Klartext."],
   ];
   return all.filter(([id]) => status[id] !== false).map(([id, t, d]) => ({ id, t, d, u: `${SITE.origin}/${id}/` }));
