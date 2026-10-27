@@ -39,10 +39,10 @@ ${SAMPLES.map((s) => { const x = stat(st, s.id); return `<article class="card sa
 </div>`;
 }
 
-const toolCards = (status) => `<section class="tools2" aria-labelledby="werkzeuge"><h2 id="werkzeuge">Weitere Werkzeuge</h2>
+const toolCards = (status, variant = 0) => `<section class="tools2" aria-labelledby="werkzeuge"><h2 id="werkzeuge">Weitere Werkzeuge</h2>
 <p>Andere Datenformate aus dem Gesundheitswesen, ebenfalls lokal im Browser:</p>
 <ul class="toollist">
-${tools(status).map((t) => `<li><a href="${t.u}">${esc(t.t)}</a> – ${esc(t.d)}</li>`).join("\n")}
+${tools(status, variant).map((t) => `<li><a href="${t.u}">${esc(t.t)}</a> – ${esc(t.d)}</li>`).join("\n")}
 </ul>
 <p class="small">Überblick über die Formate: <a href="https://freimoser.github.io/dicom-viewer/medizinische-datenformate/">Medizinische Datenformate: DICOM, LDT, BDT, GDT</a>.</p>
 </section>`;
@@ -200,7 +200,7 @@ ${mdr()}
 <h2>Andere XML-Formate im Browser lesen</h2>
 <p>Ist Ihre Datei FHIR statt CDA, eine HL7-v2-Nachricht oder eine E-Rechnung, finden Sie unten passende Werkzeuge.</p>
 </div>
-${toolCards(toolStatusLimited(toolStatus))}`;
+${toolCards(toolStatusLimited(toolStatus), 1)}`;
   return p;
 }
 function toolStatusLimited(s) { return s; }
@@ -351,8 +351,10 @@ export function privacyPage() {
 <p>Thomas Freimoser, München / Remote. Kontakt und vollständige Angaben im <a href="${SITE.impressum}">Impressum</a>.</p>
 <h2>Ihre Dateien</h2>
 <p>CDA-Dateien und eingefügter XML-Text werden ausschließlich lokal in Ihrem Browser verarbeitet. Der Viewer hat keine Upload-Funktion und überträgt Dateiinhalte nicht. Die Seite setzt eine Content-Security-Policy, die Netzwerkverbindungen der Seite (<code>connect-src 'none'</code>), fremde Skripte und fremde Ressourcen verbietet. Die Beispieldokumente sind in die Seite eingebettet. Links, die in einem Dokument stehen, öffnen sich erst, wenn Sie sie anklicken.</p>
-<h2>Cookies, Speicher und Tracking</h2>
-<p>Die Seite setzt keine Cookies, nutzt weder localStorage noch sessionStorage und enthält keine Reichweitenmessung. Der Viewer selbst lädt keine Schriften, Skripte oder Bilder von anderen Servern.</p>
+<h2>Cookies und Speicher</h2>
+<p>Die Seite setzt keine Cookies, nutzt weder localStorage noch sessionStorage.</p>
+<h2 id="extern">Keine externen Ressourcen</h2>
+<p>Der Viewer selbst lädt keine externen Ressourcen: keine Reichweitenmessung, keine Schriften, Skripte oder Bilder von Dritten und keine Einbindung sozialer Netzwerke. Links zu anderen Seiten (zum Beispiel zur Impressumsseite oder zu den Quellen) laden erst beim Anklicken.</p>
 <h2>Hosting</h2>
 <p>Diese Seite wird über GitHub Pages ausgeliefert. Beim Aufruf verarbeitet der Hoster technisch bedingt die IP-Adresse der Besucher. Wir erhalten diese Daten nicht und speichern keine personenbezogenen Daten von Ihnen. Näheres steht in der <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">Datenschutzerklärung von GitHub</a>.</p>
 <h2>Google Search Console und Bing Webmaster Tools</h2>

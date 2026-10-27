@@ -33,8 +33,15 @@ const NAV = [
 ];
 
 /** Weitere Werkzeuge; Einträge mit `ok: false` werden nicht verlinkt (Build prüft per HTTP). */
-export function tools(status = {}) {
-  const all = [
+export function tools(status = {}, variant = 0) {
+  const all = variant === 1 ? [
+    ["ldt-bdt-viewer", "Labordaten im LDT-Format und BDT-Exportdateien einsehen", "Dateien aus Labor- und Praxissystemen."],
+    ["gdt-viewer", "GDT-Austauschdateien zwischen Gerät und Praxissystem öffnen", "Textdateien im GDT-Format."],
+    ["dicom-viewer", "DICOM-Studien einer Patienten-CD lokal anzeigen", "Bildserien aus der Radiologie."],
+    ["fhir-viewer", "FHIR-JSON-Ressourcen und Bundles ansehen", "Ressourcen und Bundles des FHIR-Standards."],
+    ["hl7v2-viewer", "Pipe-getrennte HL7-v2-Nachrichten aufschlüsseln", "Segmente und Felder einer Nachricht."],
+    ["e-rechnung-klartext", "E-Rechnungen im XRechnung- oder ZUGFeRD-Format als Klartext ansehen", "Rechnungsdaten aus XML ohne Fachsoftware."],
+  ] : [
     ["ldt-bdt-viewer", "Laborbefunde (LDT) und BDT-Exporte durchblättern", "Labordaten und Praxisdaten-Exporte aus der Praxissoftware."],
     ["gdt-viewer", "GDT-Datenträgerdateien aus Praxisgeräten anzeigen", "Austauschdateien zwischen Gerät und Praxisverwaltung."],
     ["dicom-viewer", "Röntgen-, CT- und MRT-Bilder von CD betrachten", "Bilddateien im DICOM-Format."],
