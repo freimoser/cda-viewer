@@ -48,6 +48,65 @@ const attr = (el, n) => (el && el.hasAttribute(n) ? el.getAttribute(n) : "");
 const xsiType = (el) => (el ? el.getAttributeNS(NS_XSI, "type") || el.getAttribute("xsi:type") || "" : "");
 const text = (el) => (el ? el.textContent.replace(/\s+/g, " ").trim() : "");
 
+// ---------- Vorprüfung auf Wohlgeformtheit ----------
+// Chrome baut bei kaputtem XML ein <parsererror> mit Inline-Style; das löst unter der strengen CSP
+// (style-src 'self') zwei Konsolenhinweise aus. Deshalb prüft der Viewer die häufigsten Fehler selbst, bevor
+// DOMParser läuft. Die Prüfung ist bewusst konservativ: Sie meldet nur eindeutige Fehler (nicht geschlossene
+// oder falsch verschachtelte Elemente, nacktes &, ungültige Attribute, fehlendes Wurzelelement). Alles andere
+// entscheidet weiterhin der DOMParser des Browsers.
+export function wellFormedError(xml) {
+  const pos = (i) => { const pre = xml.slice(0, i); const l = pre.split("\n"); return { line: l.length, col: l[l.length - 1].length + 1 }; };
+  const err = (i, msg) => ({ ...pos(i), msg });
+  const NAME = "[^\\s<>/=\"'&]+";
+  const attrRe = new RegExp("\\s+" + NAME + "\\s*=\\s*(?:\"[^\"<]*\"|'[^'<]*')", "y");
+  const entOk = /^&(?:[A-Za-z_][\w.-]*|#\d+|#x[0-9A-Fa-f]+);/;
+  const stack = []; let i = 0, rootSeen = false, rootClosed = false;
+  const n = xml.length;
+  while (i < n) {
+    const lt = xml.indexOf("<", i);
+    const chunk = xml.slice(i, lt < 0 ? n : lt);
+    for (let k = chunk.indexOf("&"); k >= 0; k = chunk.indexOf("&", k + 1)) {
+      if (!entOk.test(chunk.slice(k, k + 40))) return err(i + k, "Das Zeichen „&“ steht ohne Entität im Text. Schreiben Sie „&amp;“.");
+    }
+    if (rootClosed && /\S/.test(chunk)) return err(i + chunk.search(/\S/), "Nach dem Wurzelelement steht weiterer Text.");
+    if (!stack.length && !rootClosed && /\S/.test(chunk)) return err(i + chunk.search(/\S/), "Vor dem Wurzelelement steht Text, der kein XML ist.");
+    if (lt < 0) break;
+    i = lt;
+    if (xml.startsWith("<!--", i)) { const e = xml.indexOf("-->", i + 4); if (e < 0) return err(i, "Kommentar nicht geschlossen."); i = e + 3; continue; }
+    if (xml.startsWith("<![CDATA[", i)) { const e = xml.indexOf("]]>", i + 9); if (e < 0) return err(i, "CDATA-Abschnitt nicht geschlossen."); i = e + 3; continue; }
+    if (xml.startsWith("<?", i)) { const e = xml.indexOf("?>", i + 2); if (e < 0) return err(i, "Verarbeitungsanweisung nicht geschlossen."); i = e + 2; continue; }
+    if (xml.startsWith("<!", i)) return null; // DOCTYPE o. Ä.: Sache des Browsers
+    if (xml[i + 1] === "/") {
+      const m = new RegExp("^</(" + NAME + ")\\s*>").exec(xml.slice(i, i + 300));
+      if (!m) return err(i, "Ungültiges Endtag.");
+      const top = stack.pop();
+      if (top !== m[1]) return err(i, top ? "Endtag </" + m[1] + "> passt nicht zum offenen Element <" + top + ">." : "Endtag </" + m[1] + "> ohne passendes Starttag.");
+      if (!stack.length) rootClosed = true;
+      i += m[0].length; continue;
+    }
+    const nm = new RegExp("<(" + NAME + ")", "y"); nm.lastIndex = i;
+    const m = nm.exec(xml);
+    if (!m) return err(i, "Das Zeichen „<“ steht ohne Elementnamen im Text. Schreiben Sie „&lt;“.");
+    if (rootClosed) return err(i, "Nach dem Wurzelelement steht ein weiteres Element.");
+    let j = i + m[0].length; const seen = new Set();
+    for (;;) {
+      attrRe.lastIndex = j; const a = attrRe.exec(xml);
+      if (!a) break;
+      const an = /\s+(\S+?)\s*=/.exec(a[0])[1];
+      if (seen.has(an)) return err(j, "Attribut „" + an + "“ kommt im Element <" + m[1] + "> doppelt vor.");
+      seen.add(an); j += a[0].length;
+    }
+    const rest = /^\s*(\/?)>/.exec(xml.slice(j, j + 50));
+    if (!rest) return err(j, "Element <" + m[1] + "> ist nicht korrekt abgeschlossen (Attribut ohne Anführungszeichen oder „>“ fehlt).");
+    rootSeen = true;
+    if (!rest[1]) stack.push(m[1]); else if (!stack.length) rootClosed = true;
+    i = j + rest[0].length;
+  }
+  if (stack.length) return err(n, "Element <" + stack[stack.length - 1] + "> wird nicht geschlossen (Datei abgeschnitten?).");
+  if (!rootSeen) return err(0, "Kein Wurzelelement gefunden.");
+  return null;
+}
+
 // ---------- Parsen ----------
 export function parseCda(xmlText, DOMParserCtor) {
   const DP = DOMParserCtor || (typeof DOMParser !== "undefined" ? DOMParser : null);
@@ -58,6 +117,8 @@ export function parseCda(xmlText, DOMParserCtor) {
   if (/^\s*<\?xml[^>]*encoding\s*=\s*["']?(iso-8859-1|windows-1252|latin1)/i.test(xmlText) === false && /\uFFFD/.test(xmlText.slice(0, 200000))) {
     // Ersatzzeichen deuten auf falsch gelesene Zeichenkodierung hin; kein harter Fehler
   }
+  const wf = wellFormedError(xmlText);
+  if (wf) return fail("xml", "Die Datei ist kein wohlgeformtes XML.", "Meldung des Viewers: Zeile " + wf.line + ", Spalte " + wf.col + ": " + wf.msg + " Häufige Ursachen: abgeschnittene Datei, nicht escapte Zeichen (&, <) im Text oder eine Datei, die gar kein XML ist (z. B. PDF oder Pipe-Nachricht).");
   let doc;
   try { doc = new DP().parseFromString(xmlText, "application/xml"); } catch (e) { return fail("xml", "Das XML konnte nicht gelesen werden.", String(e && e.message || e)); }
   const perr = doc.getElementsByTagName("parsererror")[0];

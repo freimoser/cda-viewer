@@ -6,4 +6,5 @@ with sync_playwright() as p:
     for u in ["","cda-datei-oeffnen/","cda-arztbrief-lesen/","was-ist-cda/","quellen/","datenschutz/","#beispiel=hl7-ccda-ccd","#beispiel=de-arztbrief-facharzt-level3"]:
         pg.goto("http://localhost:8777/cda-viewer/"+u); pg.reload(); pg.wait_for_timeout(700)
     pg.click("#menu-btn"); pg.click('#viewbar [data-mode=raw]'); pg.click('#viewbar [data-mode=data]')
+    pg.goto("http://localhost:8777/cda-viewer/"); pg.set_input_files("input[type=file]","/workspace/work-hl7/e2e-extra/x-broken.xml"); pg.wait_for_timeout(600)  # kaputtes XML: Vorprüfung statt parsererror
     print(m)

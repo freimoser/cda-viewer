@@ -95,3 +95,5 @@ a{color:#000}pre.raw{max-height:none;overflow:visible;white-space:pre-wrap;backg
 /* Lange Kennungen (OIDs, Commit-Hashes) dürfen umbrechen */
 .content li, .content p, .hintlist li, .hcard dd, .hcard td, .intro li, .intro p { overflow-wrap: anywhere; }
 .viewbar,#output{scroll-margin-top:72px}
+
+.toollist{padding-left:1.1em;margin:8px 0}.toollist li{margin:6px 0;overflow-wrap:anywhere}

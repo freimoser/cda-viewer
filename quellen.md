@@ -31,4 +31,4 @@ Stand der Prüfung: 27.10.2026. Alle fachlichen Aussagen auf den Seiten stützen
 „HL7“ und „FHIR“ sind eingetragene Marken von HL7 International (Grundlage: [FHIR License and Copyright](https://www.hl7.org/fhir/license.html)). „CDA“ wird hier nicht als Marke beansprucht. Keine Verbindung zu HL7 International oder HL7 Deutschland.
 
 ## Bewusst nicht behauptet
-Vergleiche mit anderen Viewern (KBV MIO Viewer und andere), Aussagen zu ePA-Spezifikationen und zu Prüfwerkzeugen stehen nicht auf den Seiten, weil dafür keine geprüfte Quelle vorliegt.
+Vergleiche mit anderen Viewern (KBV MIO Viewer und andere), Aussagen zu Spezifikationen der elektronischen Patientenakte und zu Prüfwerkzeugen stehen nicht auf den Seiten, weil dafür keine geprüfte Quelle vorliegt.

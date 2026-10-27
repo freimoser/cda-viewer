@@ -41,9 +41,9 @@ ${SAMPLES.map((s) => { const x = stat(st, s.id); return `<article class="card sa
 
 const toolCards = (status) => `<section class="tools2" aria-labelledby="werkzeuge"><h2 id="werkzeuge">Weitere Werkzeuge</h2>
 <p>Andere Datenformate aus dem Gesundheitswesen, ebenfalls lokal im Browser:</p>
-<div class="grid c3">
-${tools(status).map((t) => `<a class="card-link" href="${t.u}"><h3>${esc(t.t)}</h3><p>${esc(t.d)}</p></a>`).join("\n")}
-</div>
+<ul class="toollist">
+${tools(status).map((t) => `<li><a href="${t.u}">${esc(t.t)}</a> – ${esc(t.d)}</li>`).join("\n")}
+</ul>
 <p class="small">Überblick über die Formate: <a href="https://freimoser.github.io/dicom-viewer/medizinische-datenformate/">Medizinische Datenformate: DICOM, LDT, BDT, GDT</a>.</p>
 </section>`;
 
@@ -181,7 +181,7 @@ ${mdr()}
 <p>Die Meldungen unten stammen aus dem Viewer. Fehler erscheinen als Klartext im Statusbereich über der Ansicht, nicht als Skriptfehler.</p>
 <dl class="errlist">
 <dt>${code("Die Datei ist kein wohlgeformtes XML.")}</dt>
-<dd>Der XML-Parser des Browsers hat die Datei abgelehnt; seine Meldung steht dabei. Häufige Ursachen: abgeschnittene Datei, nicht maskierte Zeichen wie <code>&amp;</code> oder <code>&lt;</code> im Text, oder die Datei ist gar kein XML (zum Beispiel ein PDF oder eine HL7-v2-Nachricht mit senkrechten Strichen).</dd>
+<dd>Der Viewer prüft zuerst selbst auf die häufigsten Fehler (nicht geschlossene Elemente, nacktes <code>&amp;</code>, fehlendes Wurzelelement) und nennt Zeile und Spalte. Bei anderen Fehlern gilt die Meldung des XML-Parsers im Browser. Häufige Ursachen: abgeschnittene Datei, nicht maskierte Zeichen wie <code>&amp;</code> oder <code>&lt;</code> im Text, oder die Datei ist gar kein XML (zum Beispiel ein PDF oder eine HL7-v2-Nachricht mit senkrechten Strichen).</dd>
 <dt>${code("Kein CDA-Dokument: Wurzelelement ist „Bundle“.")}</dt>
 <dd>Das Wurzelelement ist nicht <code>ClinicalDocument</code>. Bei <code>Bundle</code> oder <code>Composition</code> handelt es sich um FHIR, bei Elementen wie <code>PRPA_IN201301UV02</code> um eine HL7-v3-Nachricht. Beides sind keine CDA-Dokumente. Zum Unterschied siehe ${L("was-ist-cda/", "Was ist HL7 CDA?")}.</dd>
 <dt>${code("Die Datei enthält eine DOCTYPE- oder ENTITY-Deklaration und wird nicht geladen.")}</dt>
@@ -198,7 +198,7 @@ ${mdr()}
 <dd>Ein codierter Eintrag verweist auf eine Stelle im Text, die es nicht gibt. Das deutet auf einen Fehler im erzeugenden System hin. Der Viewer zeigt die Daten trotzdem an.</dd>
 </dl>
 <h2>Andere XML-Formate im Browser lesen</h2>
-<p>Das Problem „XML ohne lesbare Ansicht“ gibt es auch bei Rechnungen: ${tools({}).filter((t) => t.id === "e-rechnung-klartext").map((t) => `<a href="${t.u}">${esc(t.t)}</a>`).join("")} liest XRechnung und ZUGFeRD im Browser. Ist Ihre Datei FHIR statt CDA, hilft ein FHIR-Viewer, bei HL7-v2-Nachrichten ein HL7-v2-Viewer. Die Liste steht unten bei den weiteren Werkzeugen.</p>
+<p>Ist Ihre Datei FHIR statt CDA, eine HL7-v2-Nachricht oder eine E-Rechnung, finden Sie unten passende Werkzeuge.</p>
 </div>
 ${toolCards(toolStatusLimited(toolStatus))}`;
   return p;
@@ -287,8 +287,7 @@ ${pre(`<td ID="bd1">148/92 mm[Hg]</td>   <!-- Narrativtext -->\n…\n<observatio
 <li>Er prüft keine Signatur, auch nicht die qualifizierte elektronische Signatur eines eArztbriefs.</li>
 <li>Er bewertet keine medizinischen Inhalte und ist kein Medizinprodukt.</li>
 </ul>
-</div>
-${toolCards(toolStatus)}`;
+</div>`;
   return p;
 }
 
@@ -335,8 +334,7 @@ ${pre(`<ClinicalDocument xmlns="urn:hl7-org:v3">\n  <!-- Header -->\n  <recordTa
 <li>Kein Nachrichtenformat wie HL7 v2, das Ereignisse zwischen Systemen überträgt.</li>
 <li>Keine Darstellung: CDA enthält den lesbaren Text, die Gestaltung liefert die anzeigende Software.</li>
 </ul>
-</div>
-${toolCards(toolStatus)}`;
+</div>`;
   return p;
 }
 

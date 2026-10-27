@@ -2,7 +2,7 @@
  "ldt-bdt-viewer": true,
  "gdt-viewer": true,
  "dicom-viewer": true,
- "fhir-viewer": false,
- "hl7v2-viewer": false,
+ "fhir-viewer": true,
+ "hl7v2-viewer": true,
  "e-rechnung-klartext": true
 }

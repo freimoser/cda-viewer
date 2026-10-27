@@ -35,12 +35,12 @@ const NAV = [
 /** Weitere Werkzeuge; Einträge mit `ok: false` werden nicht verlinkt (Build prüft per HTTP). */
 export function tools(status = {}) {
   const all = [
-    ["ldt-bdt-viewer", "LDT & BDT Viewer", "Labordaten (LDT) und Praxisdaten-Exporte (BDT) lesen."],
-    ["gdt-viewer", "GDT Viewer", "GDT-Dateien (Geräte- und Praxis-Datenträger) anzeigen."],
-    ["dicom-viewer", "DICOM Viewer", "Röntgen-, CT- und MRT-Bilder samt Radiologie-CD öffnen."],
-    ["fhir-viewer", "FHIR Viewer", "FHIR-Ressourcen und Bundles lesbar anzeigen."],
-    ["hl7v2-viewer", "HL7-v2-Viewer", "HL7-v2-Nachrichten (Pipe-Format) lesbar anzeigen."],
-    ["e-rechnung-klartext", "E-Rechnung Klartext", "XRechnung und ZUGFeRD als Klartext lesen."],
+    ["ldt-bdt-viewer", "LDT- und BDT-Dateien lesen", "Labordaten (LDT) und Praxisdaten-Exporte (BDT)."],
+    ["gdt-viewer", "GDT-Dateien anzeigen", "Geräte- und Praxis-Datenträger im GDT-Format."],
+    ["dicom-viewer", "DICOM-Bilder und Radiologie-CD öffnen", "Röntgen-, CT- und MRT-Bilder."],
+    ["fhir-viewer", "FHIR-Daten ansehen", "FHIR-Ressourcen und Bundles."],
+    ["hl7v2-viewer", "HL7-v2-Nachrichten lesen", "Nachrichten im Pipe-Format."],
+    ["e-rechnung-klartext", "XRechnung und ZUGFeRD lesen", "E-Rechnungen als Klartext."],
   ];
   return all.filter(([id]) => status[id] !== false).map(([id, t, d]) => ({ id, t, d, u: `${SITE.origin}/${id}/` }));
 }
@@ -97,8 +97,7 @@ ${NAV.map(([p, l]) => `<a href="${href(p)}"${p === path ? ' aria-current="page"'
 
 export const DISCLAIMER = "HL7 und FHIR sind eingetragene Marken von HL7 International. Dieses Werkzeug steht in keiner Verbindung zu HL7 International oder zu HL7 Deutschland und wird von diesen weder unterstützt noch empfohlen. Die Bezeichnungen werden nur zur Benennung der Formate verwendet.";
 
-function footer(toolStatus) {
-  const t = tools(toolStatus);
+function footer() {
   return `<footer class="site"><div class="wrap">
 <div class="cols">
 <div><h2>CDA-Viewer</h2><ul>
@@ -108,9 +107,6 @@ function footer(toolStatus) {
 <li><a href="${href("was-ist-cda/")}">Was ist HL7 CDA?</a></li>
 <li><a href="${href("quellen/")}">Quellen</a></li>
 <li><a href="${SITE.repo}">Quellcode auf GitHub</a></li>
-</ul></div>
-<div><h2>Weitere Werkzeuge</h2><ul>
-${t.map((x) => `<li><a href="${x.u}">${esc(x.t)}</a></li>`).join("\n")}
 </ul></div>
 <div><h2>Rechtliches</h2><ul>
 <li><a href="${SITE.impressum}">Impressum</a></li>
@@ -162,7 +158,7 @@ ${header(p.nav ?? p.path)}
 ${p.body}
 </main>
 ${p.about === false ? "" : authorBlock()}
-${footer(toolStatus)}
+${footer()}
 ${scripts}
 </body>
 </html>

@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync, readdirSync } from "node:fs";
 import { JSDOM } from "jsdom";
-import { analyze, parseCda, sanitizeNarrative, extractEntries, flattenSections, formatTs, validTs, formatTime } from "../src/js/cda.mjs";
+import { wellFormedError, analyze, parseCda, sanitizeNarrative, extractEntries, flattenSections, formatTs, validTs, formatTime } from "../src/js/cda.mjs";
 
 const dom = new JSDOM("<!doctype html><body></body>");
 const DP = dom.window.DOMParser;
@@ -165,4 +165,25 @@ test("Dokumentansicht der Facharztbriefs zeigt Tabellen, Kopf und Navigation", (
   assert.match(d.textContent, /Jonas Testmann/);
   assert.match(d.textContent, /Musterherz/);
   assert.equal(d.querySelectorAll("nav.toc li").length, 3);
+});
+
+test("Vorprüfung: keine Fehlalarme bei allen Beispielen und Testdateien", () => {
+  for (const f of readdirSync(new URL("../src/samples/", import.meta.url))) {
+    assert.equal(wellFormedError(readFileSync(new URL("../src/samples/" + f, import.meta.url), "utf8")), null, f);
+  }
+  assert.equal(wellFormedError('<?xml version="1.0"?><!-- c --><a x="1" y=\'2\'><![CDATA[ <&> ]]><b/>&amp;&#x41;&#65;</a>'), null);
+});
+test("Vorprüfung: erkennt eindeutige Fehler mit Zeile und Spalte", () => {
+  const cases = [
+    ["<a><b></a>", /passt nicht/], ["<a>", /nicht geschlossen/], ["<a>x & y</a>", /&amp;/], ["<a>x < y</a>", /&lt;/],
+    ["<a x=1/>", /abgeschlossen/], ["<a x='1' x='2'/>", /doppelt/], ["kein xml", /Vor dem Wurzelelement/], ["", /Wurzelelement/], ["<a/><b/>", /weiteres Element/], ["<a></a></b>", /ohne passendes|weiterer|Nach/],
+  ];
+  for (const [x, re] of cases) { const e = wellFormedError(x); assert.ok(e, x); assert.match(e.msg, re, x); }
+  assert.equal(wellFormedError("<a>\n<b>\n</a>").line, 3);
+});
+test("parseCda: kaputtes XML liefert Fehler ohne DOMParser-parsererror", () => {
+  let called = false;
+  class P { parseFromString() { called = true; return null; } }
+  const r = parseCda("<a><b></a>", P);
+  assert.equal(r.ok, false); assert.equal(called, false); assert.match(r.error.hint, /Zeile 1/);
 });

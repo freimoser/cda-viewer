@@ -81,7 +81,7 @@
 <p>Die Meldungen unten stammen aus dem Viewer. Fehler erscheinen als Klartext im Statusbereich über der Ansicht, nicht als Skriptfehler.</p>
 <dl class="errlist">
 <dt><code>Die Datei ist kein wohlgeformtes XML.</code></dt>
-<dd>Der XML-Parser des Browsers hat die Datei abgelehnt; seine Meldung steht dabei. Häufige Ursachen: abgeschnittene Datei, nicht maskierte Zeichen wie <code>&amp;</code> oder <code>&lt;</code> im Text, oder die Datei ist gar kein XML (zum Beispiel ein PDF oder eine HL7-v2-Nachricht mit senkrechten Strichen).</dd>
+<dd>Der Viewer prüft zuerst selbst auf die häufigsten Fehler (nicht geschlossene Elemente, nacktes <code>&amp;</code>, fehlendes Wurzelelement) und nennt Zeile und Spalte. Bei anderen Fehlern gilt die Meldung des XML-Parsers im Browser. Häufige Ursachen: abgeschnittene Datei, nicht maskierte Zeichen wie <code>&amp;</code> oder <code>&lt;</code> im Text, oder die Datei ist gar kein XML (zum Beispiel ein PDF oder eine HL7-v2-Nachricht mit senkrechten Strichen).</dd>
 <dt><code>Kein CDA-Dokument: Wurzelelement ist „Bundle“.</code></dt>
 <dd>Das Wurzelelement ist nicht <code>ClinicalDocument</code>. Bei <code>Bundle</code> oder <code>Composition</code> handelt es sich um FHIR, bei Elementen wie <code>PRPA_IN201301UV02</code> um eine HL7-v3-Nachricht. Beides sind keine CDA-Dokumente. Zum Unterschied siehe <a href="/cda-viewer/was-ist-cda/">Was ist HL7 CDA?</a>.</dd>
 <dt><code>Die Datei enthält eine DOCTYPE- oder ENTITY-Deklaration und wird nicht geladen.</code></dt>
@@ -98,16 +98,18 @@
 <dd>Ein codierter Eintrag verweist auf eine Stelle im Text, die es nicht gibt. Das deutet auf einen Fehler im erzeugenden System hin. Der Viewer zeigt die Daten trotzdem an.</dd>
 </dl>
 <h2>Andere XML-Formate im Browser lesen</h2>
-<p>Das Problem „XML ohne lesbare Ansicht“ gibt es auch bei Rechnungen: <a href="https://freimoser.github.io/e-rechnung-klartext/">E-Rechnung Klartext</a> liest XRechnung und ZUGFeRD im Browser. Ist Ihre Datei FHIR statt CDA, hilft ein FHIR-Viewer, bei HL7-v2-Nachrichten ein HL7-v2-Viewer. Die Liste steht unten bei den weiteren Werkzeugen.</p>
+<p>Ist Ihre Datei FHIR statt CDA, eine HL7-v2-Nachricht oder eine E-Rechnung, finden Sie unten passende Werkzeuge.</p>
 </div>
 <section class="tools2" aria-labelledby="werkzeuge"><h2 id="werkzeuge">Weitere Werkzeuge</h2>
 <p>Andere Datenformate aus dem Gesundheitswesen, ebenfalls lokal im Browser:</p>
-<div class="grid c3">
-<a class="card-link" href="https://freimoser.github.io/ldt-bdt-viewer/"><h3>LDT &amp; BDT Viewer</h3><p>Labordaten (LDT) und Praxisdaten-Exporte (BDT) lesen.</p></a>
-<a class="card-link" href="https://freimoser.github.io/gdt-viewer/"><h3>GDT Viewer</h3><p>GDT-Dateien (Geräte- und Praxis-Datenträger) anzeigen.</p></a>
-<a class="card-link" href="https://freimoser.github.io/dicom-viewer/"><h3>DICOM Viewer</h3><p>Röntgen-, CT- und MRT-Bilder samt Radiologie-CD öffnen.</p></a>
-<a class="card-link" href="https://freimoser.github.io/e-rechnung-klartext/"><h3>E-Rechnung Klartext</h3><p>XRechnung und ZUGFeRD als Klartext lesen.</p></a>
-</div>
+<ul class="toollist">
+<li><a href="https://freimoser.github.io/ldt-bdt-viewer/">LDT- und BDT-Dateien lesen</a> – Labordaten (LDT) und Praxisdaten-Exporte (BDT).</li>
+<li><a href="https://freimoser.github.io/gdt-viewer/">GDT-Dateien anzeigen</a> – Geräte- und Praxis-Datenträger im GDT-Format.</li>
+<li><a href="https://freimoser.github.io/dicom-viewer/">DICOM-Bilder und Radiologie-CD öffnen</a> – Röntgen-, CT- und MRT-Bilder.</li>
+<li><a href="https://freimoser.github.io/fhir-viewer/">FHIR-Daten ansehen</a> – FHIR-Ressourcen und Bundles.</li>
+<li><a href="https://freimoser.github.io/hl7v2-viewer/">HL7-v2-Nachrichten lesen</a> – Nachrichten im Pipe-Format.</li>
+<li><a href="https://freimoser.github.io/e-rechnung-klartext/">XRechnung und ZUGFeRD lesen</a> – E-Rechnungen als Klartext.</li>
+</ul>
 <p class="small">Überblick über die Formate: <a href="https://freimoser.github.io/dicom-viewer/medizinische-datenformate/">Medizinische Datenformate: DICOM, LDT, BDT, GDT</a>.</p>
 </section>
 </main>
@@ -124,12 +126,6 @@
 <li><a href="/cda-viewer/was-ist-cda/">Was ist HL7 CDA?</a></li>
 <li><a href="/cda-viewer/quellen/">Quellen</a></li>
 <li><a href="https://github.com/freimoser/cda-viewer">Quellcode auf GitHub</a></li>
-</ul></div>
-<div><h2>Weitere Werkzeuge</h2><ul>
-<li><a href="https://freimoser.github.io/ldt-bdt-viewer/">LDT &amp; BDT Viewer</a></li>
-<li><a href="https://freimoser.github.io/gdt-viewer/">GDT Viewer</a></li>
-<li><a href="https://freimoser.github.io/dicom-viewer/">DICOM Viewer</a></li>
-<li><a href="https://freimoser.github.io/e-rechnung-klartext/">E-Rechnung Klartext</a></li>
 </ul></div>
 <div><h2>Rechtliches</h2><ul>
 <li><a href="https://freimoser.de/impressum/">Impressum</a></li>

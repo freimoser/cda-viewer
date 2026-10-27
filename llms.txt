@@ -29,6 +29,8 @@ Grenzen: Dateien bis 15 MB; Dateien mit DOCTYPE oder ENTITY werden abgelehnt; re
 - [ldt-bdt-viewer](https://freimoser.github.io/ldt-bdt-viewer/)
 - [gdt-viewer](https://freimoser.github.io/gdt-viewer/)
 - [dicom-viewer](https://freimoser.github.io/dicom-viewer/)
+- [fhir-viewer](https://freimoser.github.io/fhir-viewer/)
+- [hl7v2-viewer](https://freimoser.github.io/hl7v2-viewer/)
 - [e-rechnung-klartext](https://freimoser.github.io/e-rechnung-klartext/)
 
 ## Entwickler
