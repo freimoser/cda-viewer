@@ -16,6 +16,6 @@ Die ausgelieferte Seite enthält keine Bibliotheken, Schriften oder Skripte von 
    jsdom 26.1.0, MIT-Lizenz, https://github.com/jsdom/jsdom  (und dessen transitive Abhängigkeiten, siehe package-lock.json)
 
 3. Marken
-   HL7 und FHIR sind eingetragene Marken von HL7 International. Dieses Projekt steht in keiner Verbindung zu HL7 International.
+   HL7® und FHIR® sind eingetragene Marken von Health Level Seven International. Dieses Projekt ist unabhängig und wird von HL7 International weder bereitgestellt noch empfohlen.
 
 Eigene Beispiele (src/samples/de-arztbrief-*.xml) und der übrige Code: MIT-Lizenz, siehe LICENSE.

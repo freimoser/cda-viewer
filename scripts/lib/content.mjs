@@ -405,7 +405,7 @@ ${li("chrome", "Zeitplan der Entfernung von XSLT: Chrome 158 am 17.11.2026, Chro
 <li>Codes: Die Beispiele verwenden LOINC-Codes. LOINC ist ein Urheberrecht des Regenstrief Institute, Inc.; Informationen unter <a href="https://loinc.org/">loinc.org</a>. Der Viewer enthält keine LOINC-Tabelle, nur die Codes in den Beispielen.</li>
 </ul>
 <h2>Marken</h2>
-<p>${esc("HL7 und FHIR sind eingetragene Marken von HL7 International. Dieses Werkzeug steht in keiner Verbindung zu HL7 International oder zu HL7 Deutschland und wird von diesen weder unterstützt noch empfohlen.")} Grundlage für die Nennung: <a href="https://www.hl7.org/fhir/license.html">HL7 FHIR License and Copyright</a>.</p>
+<p>${esc("HL7® und FHIR® sind eingetragene Marken von Health Level Seven International. Dieses Werkzeug ist ein unabhängiges Projekt und wird von HL7 International weder bereitgestellt noch empfohlen.")} Grundlage: Die Lizenzseite <a href="https://www.hl7.org/fhir/license.html">HL7 FHIR License and Copyright</a> nennt HL7®, HEALTH LEVEL SEVEN® und FHIR® als Marken von Health Level Seven International; die Namen werden hier nur beschreibend verwendet.</p>
 <h2>Software</h2>
 <p>Der Viewer läuft ohne Bibliotheken von Dritten. Für die automatischen Tests im Repository wird jsdom (MIT-Lizenz) verwendet; es gehört nicht zur ausgelieferten Seite. Details: <a href="${SITE.repo}/blob/main/THIRD-PARTY-LICENSES">THIRD-PARTY-LICENSES</a>.</p>
 <h2>Fehler melden</h2>

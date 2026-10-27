@@ -28,7 +28,7 @@ Stand der Prüfung: 27.10.2026. Alle fachlichen Aussagen auf den Seiten stützen
 - LOINC: Copyright Regenstrief Institute, Inc., <https://loinc.org/>. Der Viewer enthält keine LOINC-Tabelle.
 
 ## Marken
-„HL7“ und „FHIR“ sind eingetragene Marken von HL7 International (Grundlage: [FHIR License and Copyright](https://www.hl7.org/fhir/license.html)). „CDA“ wird hier nicht als Marke beansprucht. Keine Verbindung zu HL7 International oder HL7 Deutschland.
+HL7® und FHIR® sind eingetragene Marken von Health Level Seven International. Dieses Werkzeug ist ein unabhängiges Projekt und wird von HL7 International weder bereitgestellt noch empfohlen. Grundlage: Die Seite [FHIR License and Copyright](https://www.hl7.org/fhir/license.html) nennt HL7®, HEALTH LEVEL SEVEN® und FHIR® als Marken von Health Level Seven International; die Namen werden hier nur beschreibend verwendet.
 
 ## Bewusst nicht behauptet
 Vergleiche mit anderen Viewern (KBV MIO Viewer und andere), Aussagen zu Spezifikationen der elektronischen Patientenakte und zu Prüfwerkzeugen stehen nicht auf den Seiten, weil dafür keine geprüfte Quelle vorliegt.

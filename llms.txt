@@ -38,4 +38,4 @@ Grenzen: Dateien bis 15 MB; Dateien mit DOCTYPE oder ENTITY werden abgelehnt; re
 - [LinkedIn](https://www.linkedin.com/in/thomas-freimoser/)
 - [Quellcode](https://github.com/freimoser/cda-viewer)
 
-HL7 und FHIR sind eingetragene Marken von HL7 International. Dieses Werkzeug steht in keiner Verbindung zu HL7 International oder HL7 Deutschland. Stand: 27.10.2026.
+HL7® und FHIR® sind eingetragene Marken von Health Level Seven International. Dieses Werkzeug ist ein unabhängiges Projekt und wird von HL7 International weder bereitgestellt noch empfohlen. Stand: 27.10.2026.

@@ -95,7 +95,7 @@ ${NAV.map(([p, l]) => `<a href="${href(p)}"${p === path ? ' aria-current="page"'
 </div></header>`;
 }
 
-export const DISCLAIMER = "HL7 und FHIR sind eingetragene Marken von HL7 International. Dieses Werkzeug steht in keiner Verbindung zu HL7 International oder zu HL7 Deutschland und wird von diesen weder unterstützt noch empfohlen. Die Bezeichnungen werden nur zur Benennung der Formate verwendet.";
+export const DISCLAIMER = "HL7® und FHIR® sind eingetragene Marken von Health Level Seven International. Dieses Werkzeug ist ein unabhängiges Projekt und wird von HL7 International weder bereitgestellt noch empfohlen.";
 
 function footer() {
   return `<footer class="site"><div class="wrap">

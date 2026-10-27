@@ -28,6 +28,6 @@ Content-Security-Policy per Meta-Tag (`default-src 'none'`, `connect-src 'none'`
 Bekannte Einschränkung: Bei kaputtem XML baut Chrome im DOMParser ein `parsererror` mit Inline-Style, das unter der strengen CSP (`style-src 'self'`) einen Konsolenhinweis auslöst. Der Viewer prüft deshalb vorab bestimmte Fehler selbst (`wellFormedError` in `src/js/cda.mjs`: nicht geschlossene oder falsch verschachtelte Elemente, nacktes `&`, ungültige Attribute, fehlendes Wurzelelement) und meldet Zeile und Spalte, ohne den Parser aufzurufen. Seltenere Fehler (etwa ungültige Zeichen) gehen weiter an den Browser-Parser und können diesen harmlosen Konsolenhinweis auslösen; die Anzeige ist davon nicht betroffen.
 
 ## Lizenz
-MIT, siehe [LICENSE](LICENSE). Drittmaterial: [THIRD-PARTY-LICENSES](THIRD-PARTY-LICENSES). Belege: [quellen.md](quellen.md). „HL7“ und „FHIR“ sind eingetragene Marken von HL7 International; keine Verbindung zu HL7 International.
+MIT, siehe [LICENSE](LICENSE). Drittmaterial: [THIRD-PARTY-LICENSES](THIRD-PARTY-LICENSES). Belege: [quellen.md](quellen.md). HL7® und FHIR® sind eingetragene Marken von Health Level Seven International. Dieses Werkzeug ist ein unabhängiges Projekt und wird von HL7 International weder bereitgestellt noch empfohlen.
 
 Entwickelt von [Thomas Freimoser](https://freimoser.de/) (München / Remote), [LinkedIn](https://www.linkedin.com/in/thomas-freimoser/).

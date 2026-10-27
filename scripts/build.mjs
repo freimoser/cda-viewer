@@ -94,6 +94,6 @@ ${sib.map((id) => `- [${id}](${SITE.origin}/${id}/)`).join("\n")}
 - [LinkedIn](${SITE.author.linkedin})
 - [Quellcode](${SITE.repo})
 
-HL7 und FHIR sind eingetragene Marken von HL7 International. Dieses Werkzeug steht in keiner Verbindung zu HL7 International oder HL7 Deutschland. Stand: ${SITE.updatedDe}.
+HL7® und FHIR® sind eingetragene Marken von Health Level Seven International. Dieses Werkzeug ist ein unabhängiges Projekt und wird von HL7 International weder bereitgestellt noch empfohlen. Stand: ${SITE.updatedDe}.
 `);
 console.log("Build fertig:", pages.length + 1, "Seiten,", SAMPLES.length, "Beispiele");
