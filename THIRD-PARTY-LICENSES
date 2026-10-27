@@ -1,0 +1,21 @@
+Drittanbieter-Material im Repository freimoser/cda-viewer
+=========================================================
+
+Die ausgelieferte Seite enthält keine Bibliotheken, Schriften oder Skripte von Dritten.
+
+1. Beispieldaten (src/samples/hl7-ccda-*.xml, beispiele/hl7-ccda-*.xml, eingebettet in assets/js/samples-data.js)
+   Quelle:  https://github.com/HL7/C-CDA-Examples, Commit ad5007abd912a45bbd04ce96e871c70954c2b2c2
+   Dateien: Documents/CCD/CCD 2 (C_CDA_R2_CCD_2.xml), Discharge Summary, Consultation Note
+   Lizenz:  CC0 1.0 Universal (LICENSE-Datei des Repositories, https://creativecommons.org/publicdomain/zero/1.0/legalcode)
+   Hinweis: Die README des Repositories verweist zusätzlich auf die HL7 GOM, Abschnitt 09 (Geistiges Eigentum).
+            Jede Datei enthält den Hinweis, dass die Daten eine fiktive Person betreffen.
+   Änderung: In hl7-ccda-ccd.xml wurde eine E-Mail-Adresse durch isabella.jones@example.org ersetzt.
+   Die Dateien enthalten LOINC-Codes (und weitere Codes) aus dem Original. LOINC: Copyright Regenstrief Institute, Inc., https://loinc.org/
+
+2. Entwicklungsabhängigkeit (nur für Tests und den Build, nicht Teil der Seite)
+   jsdom 26.1.0, MIT-Lizenz, https://github.com/jsdom/jsdom  (und dessen transitive Abhängigkeiten, siehe package-lock.json)
+
+3. Marken
+   HL7 und FHIR sind eingetragene Marken von HL7 International. Dieses Projekt steht in keiner Verbindung zu HL7 International.
+
+Eigene Beispiele (src/samples/de-arztbrief-*.xml) und der übrige Code: MIT-Lizenz, siehe LICENSE.

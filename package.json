@@ -1,0 +1,17 @@
+{
+  "name": "cda-viewer",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "HL7 CDA Viewer – CDA-XML, C-CDA und Arztbrief im Browser lesen, ohne Upload.",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "serve": "node scripts/serve.mjs",
+    "check": "node scripts/check.mjs"
+  },
+  "devDependencies": {
+    "jsdom": "^26.0.0"
+  },
+  "license": "MIT"
+}

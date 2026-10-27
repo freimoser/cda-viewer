@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- FIKTIVES BEISPIEL: alle Namen, Nummern und Befunde sind frei erfunden (Phantasiedaten).
+     Aufbau angelehnt an die Struktur eines Arztbriefs auf Basis HL7 CDA R2; nicht gegen einen Leitfaden oder Schematron geprüft.
+     Diese Datei gehört zum CDA-Viewer von Thomas Freimoser (MIT-Lizenz). -->
+<ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <typeId root="2.16.840.1.113883.1.3" extension="POCD_HD000040"/>
+  <templateId root="1.2.276.0.76.3.1.13.10" extension="CDA-R2-AB100"/>
+  <id root="2.999.1.1" extension="ENTL-0001"/>
+  <code code="34106-5" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Zusammenfassung bei Entlassung"/>
+  <title>Entlassbrief (fiktives Beispiel)</title>
+  <effectiveTime value="20261012143000+0200"/>
+  <confidentialityCode code="N" codeSystem="2.16.840.1.113883.5.25"/>
+  <languageCode code="de-DE"/>
+  <recordTarget>
+    <patientRole>
+      <id root="2.999.1.2" extension="P-48151"/>
+      <addr><streetAddressLine>Musterweg 7</streetAddressLine><postalCode>12345</postalCode><city>Musterstadt</city><country>DE</country></addr>
+      <patient>
+        <name><given>Hannelore</given><family>Probst-Beispiel</family></name>
+        <administrativeGenderCode code="F" codeSystem="2.16.840.1.113883.5.1"/>
+        <birthTime value="19520314"/>
+      </patient>
+    </patientRole>
+  </recordTarget>
+  <author>
+    <time value="20261012140000+0200"/>
+    <assignedAuthor>
+      <id root="2.999.1.3" extension="A-100"/>
+      <assignedPerson><name><prefix>Dr. med.</prefix><given>Erika</given><family>Beispiel</family></name></assignedPerson>
+      <representedOrganization><name>Beispielklinikum Musterstadt (fiktiv), Klinik für Innere Medizin</name></representedOrganization>
+    </assignedAuthor>
+  </author>
+  <custodian>
+    <assignedCustodian>
+      <representedCustodianOrganization>
+        <id root="2.999.1.4" extension="K-1"/>
+        <name>Beispielklinikum Musterstadt (fiktiv)</name>
+        <addr><streetAddressLine>Klinikallee 1</streetAddressLine><postalCode>12345</postalCode><city>Musterstadt</city></addr>
+      </representedCustodianOrganization>
+    </assignedCustodian>
+  </custodian>
+  <informationRecipient>
+    <intendedRecipient>
+      <informationRecipient><name><prefix>Dr. med.</prefix><given>Karl</given><family>Hausarzt-Muster</family></name></informationRecipient>
+      <receivedOrganization><name>Hausarztpraxis Muster (fiktiv)</name></receivedOrganization>
+    </intendedRecipient>
+  </informationRecipient>
+  <componentOf>
+    <encompassingEncounter>
+      <id root="2.999.1.5" extension="F-2026-0815"/>
+      <effectiveTime><low value="20261005"/><high value="20261012"/></effectiveTime>
+    </encompassingEncounter>
+  </componentOf>
+  <component>
+    <structuredBody>
+      <component>
+        <section>
+          <code code="29548-5" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Diagnose"/>
+          <title>Diagnosen</title>
+          <text>
+            <list listType="ordered">
+              <item><content styleCode="Bold">Hauptdiagnose:</content> ambulant erworbene Lungenentzündung (Pneumonie) im rechten Unterlappen</item>
+              <item>Nebendiagnose: Bluthochdruck, medikamentös eingestellt</item>
+            </list>
+          </text>
+        </section>
+      </component>
+      <component>
+        <section>
+          <code code="10164-2" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Jetzige Anamnese"/>
+          <title>Aufnahmegrund und Anamnese</title>
+          <text>
+            <paragraph>Die Patientin stellte sich mit seit vier Tagen bestehendem Husten, Fieber bis 38,9 °C und Abgeschlagenheit vor.</paragraph>
+            <paragraph>Vorerkrankungen: arterielle Hypertonie. Keine bekannten Medikamentenallergien.</paragraph>
+          </text>
+        </section>
+      </component>
+      <component>
+        <section>
+          <code code="8648-8" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Verlauf im Krankenhaus"/>
+          <title>Verlauf</title>
+          <text>
+            <paragraph>Unter intravenöser Antibiotikatherapie kam es innerhalb von drei Tagen zur Entfieberung. Die Entzündungswerte fielen im Verlauf deutlich ab.</paragraph>
+            <table border="1">
+              <caption>Laborverlauf (fiktive Werte)</caption>
+              <thead><tr><th>Parameter</th><th>Aufnahme</th><th>Entlassung</th><th>Einheit</th></tr></thead>
+              <tbody>
+                <tr><td>CRP</td><td>148</td><td>12</td><td>mg/l</td></tr>
+                <tr><td>Leukozyten</td><td>14,2</td><td>7,1</td><td>10^9/l</td></tr>
+                <tr><td>Kreatinin</td><td>0,9</td><td>0,8</td><td>mg/dl</td></tr>
+              </tbody>
+            </table>
+          </text>
+        </section>
+      </component>
+      <component>
+        <section>
+          <code code="10183-2" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Medikamente bei Entlassung"/>
+          <title>Entlassmedikation</title>
+          <text>
+            <table>
+              <thead><tr><th>Wirkstoff</th><th>Dosierung</th><th>Hinweis</th></tr></thead>
+              <tbody>
+                <tr><td>Beispiel-Wirkstoff A (Antibiotikum)</td><td>1-0-1</td><td>noch 4 Tage</td></tr>
+                <tr><td>Beispiel-Wirkstoff B (Blutdrucksenker)</td><td>1-0-0</td><td>unverändert fortführen</td></tr>
+              </tbody>
+            </table>
+          </text>
+        </section>
+      </component>
+      <component>
+        <section>
+          <code code="18776-5" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Behandlungsplan, weiteres Vorgehen"/>
+          <title>Empfehlung zum weiteren Vorgehen</title>
+          <text>
+            <list>
+              <item>Röntgenkontrolle des Thorax in etwa sechs Wochen.</item>
+              <item>Blutdruck und Nierenwerte in der hausärztlichen Praxis kontrollieren.</item>
+              <item>Bei erneutem Fieber oder zunehmender Luftnot bitte umgehende Wiedervorstellung.</item>
+            </list>
+            <paragraph>Mit freundlichen kollegialen Grüßen<br/>Dr. med. Erika Beispiel (fiktiv)</paragraph>
+          </text>
+        </section>
+      </component>
+    </structuredBody>
+  </component>
+</ClinicalDocument>
