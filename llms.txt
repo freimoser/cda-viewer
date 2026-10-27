@@ -1,0 +1,39 @@
+# CDA-Viewer
+
+> Kostenloser Viewer für HL7 CDA-Dokumente (Clinical Document Architecture, R2) im Browser, auf Deutsch. Zeigt Arztbriefe, Entlassbriefe und C-CDA-Dokumente lesbar an: Kopf, Abschnitte, Narrativtext, codierte Einträge (Level 3) als Tabelle, Roh-XML und Druckansicht. Arbeitet ohne XSLT (DOMParser und eigener Renderer), ohne Upload, ohne Cookies, ohne Tracking. Nur zur Ansicht, kein Medizinprodukt, keine Schema- oder Schematron-Prüfung, keine Signaturprüfung.
+
+Grenzen: Dateien bis 15 MB; Dateien mit DOCTYPE oder ENTITY werden abgelehnt; renderMultiMedia und nonXMLBody (eingebettetes PDF) werden nicht angezeigt; ein eingetragenes Stylesheet wird ignoriert.
+
+## Seiten
+- [Viewer für HL7 CDA-Arztbriefe – CDA-XML online ansehen](https://freimoser.github.io/cda-viewer/): HL7 CDA Viewer online: CDA-XML (Arztbrief, C-CDA) im Browser lesen – Kopf, Abschnitte, Text und Entries. Kostenlos, ohne Upload, ohne XSLT.
+- [HL7 CDA-Datei öffnen: XML lesbar anzeigen (Anleitung)](https://freimoser.github.io/cda-viewer/cda-datei-oeffnen/): HL7 CDA-Datei öffnen: Warum XML ohne Stylesheet unlesbar wirkt, wie Sie sie im Browser lesen und was die Fehlermeldungen bedeuten.
+- [HL7 CDA-Arztbrief lesen: Aufbau, Level und eArztbrief](https://freimoser.github.io/cda-viewer/cda-arztbrief-lesen/): Aufbau eines Arztbriefs nach HL7 CDA R2: Kopf, Abschnitte, LOINC-Codes, Level 1 bis 3, Entries und der eArztbrief nach KBV-Richtlinie.
+- [Was ist HL7 CDA? Aufbau, C-CDA, HL7 v3 und FHIR](https://freimoser.github.io/cda-viewer/was-ist-cda/): HL7 CDA (Clinical Document Architecture) erklärt: Header und Body, Level 1 bis 3, Unterschied zu C-CDA und HL7 v3, Einordnung gegenüber FHIR-Dokumenten.
+- [Quellen und Lizenzen – CDA-Viewer](https://freimoser.github.io/cda-viewer/quellen/): Belege für die Aussagen auf den Seiten des CDA-Viewers: Leitfäden, KBV-Richtlinie, Browserplanung, Beispieldaten und Lizenzen.
+- [Datenschutz – CDA-Viewer](https://freimoser.github.io/cda-viewer/datenschutz/): Datenschutz beim CDA-Viewer: Dateien bleiben im Browser, keine Cookies, kein Tracking, Hosting über GitHub Pages.
+
+## Beispieldateien (XML, zum Herunterladen)
+- [Entlassbrief (fiktiv, Deutsch)](https://freimoser.github.io/cda-viewer/beispiele/de-arztbrief-entlassbrief.xml): Eigenes Beispiel, Lizenz MIT
+- [Facharztbrief mit Messwerten (fiktiv, Deutsch)](https://freimoser.github.io/cda-viewer/beispiele/de-arztbrief-facharzt-level3.xml): Eigenes Beispiel, Lizenz MIT
+- [Continuity of Care Document (C-CDA R2.1)](https://freimoser.github.io/cda-viewer/beispiele/hl7-ccda-ccd.xml): HL7 C-CDA-Examples, CC0, Lizenz CC0 1.0
+- [Discharge Summary (C-CDA R2.1)](https://freimoser.github.io/cda-viewer/beispiele/hl7-ccda-discharge-summary.xml): HL7 C-CDA-Examples, CC0, Lizenz CC0 1.0
+- [Consultation Note (C-CDA R2.1)](https://freimoser.github.io/cda-viewer/beispiele/hl7-ccda-consultation-note.xml): HL7 C-CDA-Examples, CC0, Lizenz CC0 1.0
+
+## Quellen (Auswahl)
+- [VHitG-Arztbrief-Leitfaden v1.50](https://download.hl7.de/documents/cdar2-arztbrief/Leitfaden-VHitG-Arztbrief-v150.pdf)
+- [KBV, Richtlinie elektronischer Brief](https://www.kbv.de/documents/infothek/rechtsquellen/weitere-vertraege/praxen/telemedizin/rl-earztbrief.pdf)
+- [Chrome for Developers, Removing XSLT](https://developer.chrome.com/docs/web-platform/deprecating-xslt)
+- [Consolidated CDA (C-CDA) IG](https://hl7.org/cda/us/ccda/)
+
+## Weitere Werkzeuge
+- [ldt-bdt-viewer](https://freimoser.github.io/ldt-bdt-viewer/)
+- [gdt-viewer](https://freimoser.github.io/gdt-viewer/)
+- [dicom-viewer](https://freimoser.github.io/dicom-viewer/)
+- [e-rechnung-klartext](https://freimoser.github.io/e-rechnung-klartext/)
+
+## Entwickler
+- [Thomas Freimoser](https://freimoser.de/)
+- [LinkedIn](https://www.linkedin.com/in/thomas-freimoser/)
+- [Quellcode](https://github.com/freimoser/cda-viewer)
+
+HL7 und FHIR sind eingetragene Marken von HL7 International. Dieses Werkzeug steht in keiner Verbindung zu HL7 International oder HL7 Deutschland. Stand: 27.10.2026.

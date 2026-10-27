@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'none'; connect-src 'none'; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Viewer für HL7 CDA-Arztbriefe – CDA-XML online ansehen</title>
+<meta name="description" content="HL7 CDA Viewer online: CDA-XML (Arztbrief, C-CDA) im Browser lesen – Kopf, Abschnitte, Text und Entries. Kostenlos, ohne Upload, ohne XSLT.">
+<link rel="canonical" href="https://freimoser.github.io/cda-viewer/">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="google-site-verification" content="6pYvtFCnU7UFcQFajtMSkQ7tYMy3Z_Bt7teKiT5yKNg">
+<meta name="msvalidate.01" content="E1F30DEB311AAF5458907DB431B481AC">
+<meta name="theme-color" content="#0b1210">
+<meta name="author" content="Thomas Freimoser">
+<link rel="icon" href="/cda-viewer/favicon.ico" sizes="48x48">
+<link rel="icon" href="/cda-viewer/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/cda-viewer/favicon-96.png" type="image/png" sizes="96x96">
+<link rel="apple-touch-icon" href="/cda-viewer/apple-touch-icon.png" sizes="180x180">
+<link rel="manifest" href="/cda-viewer/site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="de_DE">
+<meta property="og:site_name" content="CDA-Viewer">
+<meta property="og:title" content="HL7 CDA Viewer online – Arztbrief und CDA-XML im Browser lesen">
+<meta property="og:description" content="HL7 CDA Viewer online: CDA-XML (Arztbrief, C-CDA) im Browser lesen – Kopf, Abschnitte, Text und Entries. Kostenlos, ohne Upload, ohne XSLT.">
+<meta property="og:url" content="https://freimoser.github.io/cda-viewer/">
+<meta property="og:image" content="https://freimoser.github.io/cda-viewer/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="CDA-Viewer: HL7 CDA-Arztbriefe im Browser lesen, ohne Upload">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="HL7 CDA Viewer online – Arztbrief und CDA-XML im Browser lesen">
+<meta name="twitter:description" content="HL7 CDA Viewer online: CDA-XML (Arztbrief, C-CDA) im Browser lesen – Kopf, Abschnitte, Text und Entries. Kostenlos, ohne Upload, ohne XSLT.">
+<meta name="twitter:image" content="https://freimoser.github.io/cda-viewer/og-image.png">
+<link rel="stylesheet" href="/cda-viewer/assets/css/styles.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":["WebApplication","HealthApplication"],"name":"CDA-Viewer","alternateName":"HL7 CDA Viewer","url":"https://freimoser.github.io/cda-viewer/","description":"HL7 CDA Viewer online: CDA-XML (Arztbrief, C-CDA) im Browser lesen – Kopf, Abschnitte, Text und Entries. Kostenlos, ohne Upload, ohne XSLT.","applicationCategory":"HealthApplication","operatingSystem":"Alle Systeme mit aktuellem Webbrowser","browserRequirements":"JavaScript, aktueller Browser","inLanguage":"de-DE","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"featureList":["HL7 CDA R2 und C-CDA lesbar anzeigen","Kopf, Abschnitte und Narrativtext","Codierte Einträge (Level 3) als Tabelle","Roh-XML und Druckansicht","Verarbeitung nur im Browser, kein Upload"],"author":{"@type":"Person","@id":"https://freimoser.de/#person","name":"Thomas Freimoser","url":"https://freimoser.de/","sameAs":["https://www.linkedin.com/in/thomas-freimoser/"]},"datePublished":"2026-10-27","dateModified":"2026-10-27","image":"https://freimoser.github.io/cda-viewer/og-image.png"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Was ist ein HL7-CDA-Dokument?","acceptedAnswer":{"@type":"Answer","text":"CDA (Clinical Document Architecture) ist ein XML-Standard von HL7 International für klinische Dokumente wie Arztbriefe oder Entlassbriefe. Ein CDA-Dokument besteht aus einem Header mit Patient, Autor, Dokumenttyp und Datum sowie einem Body aus Abschnitten mit lesbarem Text und optional codierten Einträgen. Mehr dazu unter Was ist HL7 CDA?."}},{"@type":"Question","name":"Wie öffne ich eine CDA-XML-Datei lesbar?","acceptedAnswer":{"@type":"Answer","text":"Ziehen Sie die Datei in das Feld oben oder fügen Sie den XML-Text ein. Der Viewer zeigt Kopf, Abschnitte und Text an; mit „Strukturdaten“ sehen Sie die codierten Einträge als Tabelle, mit „Roh-XML“ den Quelltext. Eine Anleitung mit typischen Fehlermeldungen steht unter CDA-Datei öffnen."}},{"@type":"Question","name":"Ist HL7 v3 dasselbe wie CDA?","acceptedAnswer":{"@type":"Answer","text":"Nicht ganz. CDA Release 2 gehört zur „Familie“ der HL7-Version-3-Standards und beruht auf dem HL7-Referenz-Informationsmodell (RIM) (Quelle: VHitG-Arztbrief-Leitfaden v1.50 (HL7 Deutschland)). Mit v3-Nachrichten, die Daten zwischen Systemen austauschen, ist ein CDA-Dokument nicht identisch. Erkennt der Viewer ein v3-Nachrichtenelement als Wurzel, meldet er „Kein CDA-Dokument“ und nennt das gefundene Element."}},{"@type":"Question","name":"Was bedeuten Level 1, 2 und 3 beim Arztbrief?","acceptedAnswer":{"@type":"Answer","text":"Level 1 ist ein lesbares XML-Dokument ohne codierte Struktur, Level 2 kennzeichnet zusätzlich die Abschnitte mit Codes, Level 3 enthält maschinenauswertbare Einzelinformationen (entry) (Quelle: VHitG-Arztbrief-Leitfaden v1.50 (HL7 Deutschland), Kapitel 6.2). Der Viewer schätzt das Level aus dem Dokument; das ist ein Hinweis, keine Konformitätsaussage. Details: Arztbrief lesen."}},{"@type":"Question","name":"Ist der eArztbrief ein CDA-Dokument?","acceptedAnswer":{"@type":"Answer","text":"Die KBV-Richtlinie zum elektronischen Brief (in Kraft seit 17.05.2024) verlangt mindestens eine PDF/A-Datei und eine XML-Datei nach dem Implementierungsleitfaden „Arztbrief“ auf Basis von HL7 CDA Release 2, Version 1.50 vom 12.05.2006. Die XML-Datei darf sich auf Patient und Absender beschränken, der Body darf leer sein; der Inhalt steht dann im PDF (Quelle: KBV, Richtlinie elektronischer Brief (in Kraft seit 17.05.2024)). Ein solcher Brief erscheint im Viewer mit Kopf und ohne Abschnitte."}},{"@type":"Question","name":"Wird meine Datei hochgeladen?","acceptedAnswer":{"@type":"Answer","text":"Nein. Die Datei wird im Browser gelesen und dort verarbeitet. Die Seite setzt eine Content-Security-Policy mit connect-src 'none', der Browser blockiert damit Netzwerkverbindungen der Seite selbst. Dateien mit DOCTYPE- oder ENTITY-Deklaration lehnt der Viewer aus Sicherheitsgründen ab. Mehr unter Datenschutz."}},{"@type":"Question","name":"Prüft der Viewer, ob ein CDA-Dokument gültig ist?","acceptedAnswer":{"@type":"Answer","text":"Nein. Der Viewer zeigt Plausibilitätshinweise, etwa fehlende Kopfbestandteile oder Text-Verweise ohne Ziel. Er führt keine Schema- oder Schematron-Prüfung gegen einen Leitfaden aus, prüft keine Signaturen und ist kein Medizinprodukt. Für eine Konformitätsprüfung brauchen Sie einen Validator, der die Regeln des jeweiligen Leitfadens umsetzt."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"CDA-Viewer","item":"https://freimoser.github.io/cda-viewer/"}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Zum Inhalt springen</a>
+<header class="top"><div class="wrap">
+<a class="brand" href="/cda-viewer/"><img src="/cda-viewer/favicon.svg" alt="" width="28" height="28"><span>CDA-Viewer</span></a>
+<button class="menu-btn" id="menu-btn" type="button" aria-label="Menü" aria-expanded="false" aria-controls="site-nav"><span></span></button>
+<nav class="main" id="site-nav" aria-label="Hauptnavigation">
+<a href="/cda-viewer/" aria-current="page">Viewer</a>
+<a href="/cda-viewer/cda-datei-oeffnen/">CDA-Datei öffnen</a>
+<a href="/cda-viewer/cda-arztbrief-lesen/">Arztbrief lesen</a>
+<a href="/cda-viewer/was-ist-cda/">Was ist CDA?</a>
+<a href="/cda-viewer/quellen/">Quellen</a>
+</nav>
+</div></header>
+<main id="main" class="wrap">
+<h1>Viewer für HL7 CDA-Arztbriefe: CDA-XML im Browser lesen</h1>
+<p class="lead">Dieser CDA-Viewer zeigt Dokumente nach HL7 CDA R2 (Clinical Document Architecture) lesbar an, zum Beispiel Arztbriefe, Entlassbriefe und C-CDA-Dokumente: den Kopf mit Patient, Autor und Verwahrer, die Abschnitte mit ihrem Text und die codierten Einträge. Ihre Datei wird nur in Ihrem Browser gelesen.</p>
+<div class="mdr" role="note">Nur zur Ansicht, kein Medizinprodukt, keine Grundlage für Diagnose oder Behandlung. Ihre Dateien bleiben auf Ihrem Gerät: Es gibt keinen Upload.</div>
+<section id="viewer" aria-labelledby="tool">
+<h2 id="tool">CDA-Datei öffnen</h2>
+<div class="drop" id="drop">
+<p><strong>CDA-XML-Datei hierher ziehen</strong> oder auswählen</p>
+<div class="btns"><label class="btn pri">Datei auswählen<input type="file" id="file" accept=".xml,.cda,.txt,text/xml,application/xml"></label></div>
+</div>
+<details class="paste"><summary>XML-Text einfügen</summary>
+<label class="small" for="paste">CDA-XML hier einfügen</label>
+<textarea id="paste" spellcheck="false" autocomplete="off" placeholder="&lt;ClinicalDocument xmlns=&quot;urn:hl7-org:v3&quot; …"></textarea>
+<div class="btns"><button class="btn pri" type="button" id="paste-go">Anzeigen</button><button class="btn" type="button" id="paste-clear">Leeren</button></div>
+</details>
+<p class="status" id="status" role="status" aria-live="polite"></p>
+<p class="sampleinfo" id="sampleinfo" hidden></p>
+<div class="viewbar" id="viewbar" role="group" aria-label="Ansicht" hidden>
+<button class="btn sm on" type="button" data-mode="doc">Dokument</button>
+<button class="btn sm" type="button" data-mode="data">Strukturdaten</button>
+<button class="btn sm" type="button" data-mode="raw">Roh-XML</button>
+<button class="btn sm" type="button" id="print">Druckansicht</button>
+</div>
+<div id="output"></div>
+<noscript><p class="errbox">Der Viewer braucht JavaScript, weil er die Datei im Browser verarbeitet. Es wird nichts an einen Server gesendet.</p></noscript>
+</section>
+<section class="samples" id="beispiele" aria-labelledby="bsp">
+<h2 id="bsp">Beispiele zum Ausprobieren</h2>
+<p>Fünf kleine Beispieldokumente liegen direkt in der Seite, es wird nichts nachgeladen. Zwei sind eigene, frei erfundene deutsche Arztbriefe, drei stammen aus dem Beispielrepository der C-CDA-Arbeitsgruppe von HL7 (CC0 1.0). Die Herkunft steht an jeder Karte und in den <a href="/cda-viewer/quellen/">Quellen</a>. Die Beispiele enthalten keine echten Patientendaten.</p>
+<div class="grid c3">
+<article class="card sample">
+<span class="badge">Eigenes Beispiel</span>
+<h3>Entlassbrief (fiktiv, Deutsch)</h3>
+<p>Fiktiver Krankenhaus-Entlassbrief in der Struktur eines deutschen Arztbriefs: Kopf mit Patientin, Autor und Verwahrer, Abschnitte mit Text und LOINC-Code, keine codierten Einträge (Level 2).</p>
+<p class="small">5 Abschnitte, 0 Einträge, vom Viewer als Level 2 geschätzt. Lizenz: MIT. Eigenes, frei erfundenes Beispiel von Thomas Freimoser (MIT-Lizenz). Keine echten Patientendaten.</p>
+<div class="btns"><button class="btn pri" type="button" data-sample="de-arztbrief-entlassbrief">Im Viewer öffnen</button><a class="btn" href="/cda-viewer/beispiele/de-arztbrief-entlassbrief.xml" download>XML laden</a></div>
+</article>
+<article class="card sample">
+<span class="badge">Eigenes Beispiel</span>
+<h3>Facharztbrief mit Messwerten (fiktiv, Deutsch)</h3>
+<p>Fiktiver ambulanter Facharztbrief mit Level-3-Einträgen: Blutdruck, Herzfrequenz und Körpergewicht als Vitalwerte-Organizer sowie Laborwerte, jeweils mit Verweis auf die Tabellenzelle im Text.</p>
+<p class="small">3 Abschnitte, 3 Einträge, vom Viewer als Level 3 geschätzt. Lizenz: MIT. Eigenes, frei erfundenes Beispiel von Thomas Freimoser (MIT-Lizenz). Keine echten Patientendaten.</p>
+<div class="btns"><button class="btn pri" type="button" data-sample="de-arztbrief-facharzt-level3">Im Viewer öffnen</button><a class="btn" href="/cda-viewer/beispiele/de-arztbrief-facharzt-level3.xml" download>XML laden</a></div>
+</article>
+<article class="card sample">
+<span class="badge">HL7 C-CDA-Examples, CC0</span>
+<h3>Continuity of Care Document (C-CDA R2.1)</h3>
+<p>US-amerikanisches Beispiel eines CCD aus dem offiziellen Beispielrepository der C-CDA-Arbeitsgruppe. Englisch, viele codierte Einträge.</p>
+<p class="small">7 Abschnitte, 7 Einträge, vom Viewer als Level 3 geschätzt. Lizenz: CC0 1.0. HL7/C-CDA-Examples, C-CDA_R2_CCD_2.xml, Commit ad5007a, CC0 1.0. Eine E-Mail-Adresse wurde durch isabella.jones@example.org ersetzt.</p>
+<div class="btns"><button class="btn pri" type="button" data-sample="hl7-ccda-ccd">Im Viewer öffnen</button><a class="btn" href="/cda-viewer/beispiele/hl7-ccda-ccd.xml" download>XML laden</a></div>
+</article>
+<article class="card sample">
+<span class="badge">HL7 C-CDA-Examples, CC0</span>
+<h3>Discharge Summary (C-CDA R2.1)</h3>
+<p>Entlassbericht aus dem C-CDA-Beispielrepository: englischsprachig, mit Aufnahmediagnose, Allergien und weiteren Abschnitten.</p>
+<p class="small">21 Abschnitte, 16 Einträge, vom Viewer als Level 3 geschätzt. Lizenz: CC0 1.0. HL7/C-CDA-Examples, C-CDA_R2_Discharge_Summary.xml, Commit ad5007a, CC0 1.0.</p>
+<div class="btns"><button class="btn pri" type="button" data-sample="hl7-ccda-discharge-summary">Im Viewer öffnen</button><a class="btn" href="/cda-viewer/beispiele/hl7-ccda-discharge-summary.xml" download>XML laden</a></div>
+</article>
+<article class="card sample">
+<span class="badge">HL7 C-CDA-Examples, CC0</span>
+<h3>Consultation Note (C-CDA R2.1)</h3>
+<p>Konsiliarbericht aus dem C-CDA-Beispielrepository, das größte der Beispiele (rund 90 KB), mit Tabellen im Text und zahlreichen codierten Einträgen.</p>
+<p class="small">13 Abschnitte, 21 Einträge, vom Viewer als Level 3 geschätzt. Lizenz: CC0 1.0. HL7/C-CDA-Examples, C-CDA_R2_Consultation_Note.xml, Commit ad5007a, CC0 1.0.</p>
+<div class="btns"><button class="btn pri" type="button" data-sample="hl7-ccda-consultation-note">Im Viewer öffnen</button><a class="btn" href="/cda-viewer/beispiele/hl7-ccda-consultation-note.xml" download>XML laden</a></div>
+</article>
+</div>
+</section>
+<section class="intro" aria-labelledby="funktion">
+<h2 id="funktion">Was der Viewer anzeigt</h2>
+<div class="content">
+<ul>
+<li><strong>Dokument:</strong> Titel, Kopf (Dokumenttyp, Datum, Patient, Autor, Verwahrer, Empfänger, Unterzeichner), ein Inhaltsverzeichnis der Abschnitte und den Text jedes Abschnitts mit Tabellen, Listen und Textauszeichnungen.</li>
+<li><strong>Strukturdaten:</strong> der Kopf als Tabelle und alle codierten Einträge (entry) je Abschnitt mit Code, Wert, Einheit, Zeit und Status.</li>
+<li><strong>Roh-XML:</strong> der Quelltext, wahlweise eingerückt.</li>
+<li><strong>Druckansicht:</strong> druckt nur das dargestellte Dokument, ohne Navigation. Über den Druckdialog des Browsers lässt es sich als PDF sichern.</li>
+<li><strong>Plausibilitätshinweise:</strong> zum Beispiel fehlende Kopfbestandteile, abweichende typeId, Abschnitte ohne Inhalt oder Text-Verweise ohne Ziel. Das ist keine Schematron-Prüfung.</li>
+</ul>
+<p>Der Viewer arbeitet ohne XSLT: Er liest das Dokument mit dem XML-Parser des Browsers (DOMParser) und baut die Ansicht selbst auf. Warum das wichtig ist, steht unter <a href="/cda-viewer/cda-datei-oeffnen/#xslt">CDA-Datei öffnen</a>.</p>
+</div>
+</section>
+<section aria-labelledby="grenzen">
+<h2 id="grenzen">Grenzen</h2>
+<div class="content">
+<ul>
+<li>Kein Medizinprodukt und keine klinische Bewertung. Der Viewer prüft keine Inhalte auf medizinische Richtigkeit.</li>
+<li>Keine Schema-, Schematron- oder Leitfaden-Validierung und keine Signaturprüfung.</li>
+<li>Ein in der Datei eingetragenes Stylesheet (<code>xml-stylesheet</code>) wird ignoriert. Die Darstellung ist die des Viewers, nicht die des Erzeugersystems.</li>
+<li>Eingebettete Medien (<code>renderMultiMedia</code>) und ein <code>nonXMLBody</code> mit PDF werden nicht angezeigt; der Viewer markiert die Stelle.</li>
+<li>Dateien über 15 MB und Dateien mit DOCTYPE- oder ENTITY-Deklaration werden abgelehnt.</li>
+<li>Codes werden so angezeigt, wie sie in der Datei stehen (Code, Codesystem, Anzeigename). Der Viewer übersetzt keine Codes und enthält nur eine kleine Liste häufiger Codesystem-OIDs.</li>
+</ul>
+</div>
+</section>
+<section aria-labelledby="weiter">
+<h2 id="weiter">Weiterlesen</h2>
+<div class="grid c3">
+<a class="card-link" href="/cda-viewer/cda-datei-oeffnen/"><h3>CDA-Datei öffnen</h3><p>Warum eine CDA-XML-Datei im Browser unlesbar wirkt und welche Fehlermeldungen was bedeuten.</p></a>
+<a class="card-link" href="/cda-viewer/cda-arztbrief-lesen/"><h3>Arztbrief lesen</h3><p>Aufbau eines Arztbriefs nach HL7 CDA: Kopf, Abschnitte, Level und eArztbrief.</p></a>
+<a class="card-link" href="/cda-viewer/was-ist-cda/"><h3>Was ist HL7 CDA?</h3><p>CDA, C-CDA, HL7 v3 und FHIR: wie die Begriffe zusammenhängen.</p></a>
+</div>
+</section>
+<section aria-labelledby="faq"><h2 id="faq">Häufige Fragen</h2>
+<details class="faq"><summary>Was ist ein HL7-CDA-Dokument?</summary><div><p>CDA (Clinical Document Architecture) ist ein XML-Standard von HL7 International für klinische Dokumente wie Arztbriefe oder Entlassbriefe. Ein CDA-Dokument besteht aus einem Header mit Patient, Autor, Dokumenttyp und Datum sowie einem Body aus Abschnitten mit lesbarem Text und optional codierten Einträgen. Mehr dazu unter <a href="/cda-viewer/was-ist-cda/">Was ist HL7 CDA?</a>.</p></div></details>
+<details class="faq"><summary>Wie öffne ich eine CDA-XML-Datei lesbar?</summary><div><p>Ziehen Sie die Datei in das Feld oben oder fügen Sie den XML-Text ein. Der Viewer zeigt Kopf, Abschnitte und Text an; mit „Strukturdaten“ sehen Sie die codierten Einträge als Tabelle, mit „Roh-XML“ den Quelltext. Eine Anleitung mit typischen Fehlermeldungen steht unter <a href="/cda-viewer/cda-datei-oeffnen/">CDA-Datei öffnen</a>.</p></div></details>
+<details class="faq"><summary>Ist HL7 v3 dasselbe wie CDA?</summary><div><p>Nicht ganz. CDA Release 2 gehört zur „Familie“ der HL7-Version-3-Standards und beruht auf dem HL7-Referenz-Informationsmodell (RIM) (Quelle: <a href="https://download.hl7.de/documents/cdar2-arztbrief/Leitfaden-VHitG-Arztbrief-v150.pdf">VHitG-Arztbrief-Leitfaden v1.50 (HL7 Deutschland)</a>). Mit v3-Nachrichten, die Daten zwischen Systemen austauschen, ist ein CDA-Dokument nicht identisch. Erkennt der Viewer ein v3-Nachrichtenelement als Wurzel, meldet er „Kein CDA-Dokument“ und nennt das gefundene Element.</p></div></details>
+<details class="faq"><summary>Was bedeuten Level 1, 2 und 3 beim Arztbrief?</summary><div><p>Level 1 ist ein lesbares XML-Dokument ohne codierte Struktur, Level 2 kennzeichnet zusätzlich die Abschnitte mit Codes, Level 3 enthält maschinenauswertbare Einzelinformationen (entry) (Quelle: <a href="https://download.hl7.de/documents/cdar2-arztbrief/Leitfaden-VHitG-Arztbrief-v150.pdf">VHitG-Arztbrief-Leitfaden v1.50 (HL7 Deutschland)</a>, Kapitel 6.2). Der Viewer schätzt das Level aus dem Dokument; das ist ein Hinweis, keine Konformitätsaussage. Details: <a href="/cda-viewer/cda-arztbrief-lesen/">Arztbrief lesen</a>.</p></div></details>
+<details class="faq"><summary>Ist der eArztbrief ein CDA-Dokument?</summary><div><p>Die KBV-Richtlinie zum elektronischen Brief (in Kraft seit 17.05.2024) verlangt mindestens eine PDF/A-Datei und eine XML-Datei nach dem Implementierungsleitfaden „Arztbrief“ auf Basis von HL7 CDA Release 2, Version 1.50 vom 12.05.2006. Die XML-Datei darf sich auf Patient und Absender beschränken, der Body darf leer sein; der Inhalt steht dann im PDF (Quelle: <a href="https://www.kbv.de/documents/infothek/rechtsquellen/weitere-vertraege/praxen/telemedizin/rl-earztbrief.pdf">KBV, Richtlinie elektronischer Brief (in Kraft seit 17.05.2024)</a>). Ein solcher Brief erscheint im Viewer mit Kopf und ohne Abschnitte.</p></div></details>
+<details class="faq"><summary>Wird meine Datei hochgeladen?</summary><div><p>Nein. Die Datei wird im Browser gelesen und dort verarbeitet. Die Seite setzt eine Content-Security-Policy mit <code>connect-src 'none'</code>, der Browser blockiert damit Netzwerkverbindungen der Seite selbst. Dateien mit DOCTYPE- oder ENTITY-Deklaration lehnt der Viewer aus Sicherheitsgründen ab. Mehr unter <a href="/cda-viewer/datenschutz/">Datenschutz</a>.</p></div></details>
+<details class="faq"><summary>Prüft der Viewer, ob ein CDA-Dokument gültig ist?</summary><div><p>Nein. Der Viewer zeigt Plausibilitätshinweise, etwa fehlende Kopfbestandteile oder Text-Verweise ohne Ziel. Er führt keine Schema- oder Schematron-Prüfung gegen einen Leitfaden aus, prüft keine Signaturen und ist kein Medizinprodukt. Für eine Konformitätsprüfung brauchen Sie einen Validator, der die Regeln des jeweiligen Leitfadens umsetzt.</p></div></details>
+</section>
+<section class="tools2" aria-labelledby="werkzeuge"><h2 id="werkzeuge">Weitere Werkzeuge</h2>
+<p>Andere Datenformate aus dem Gesundheitswesen, ebenfalls lokal im Browser:</p>
+<div class="grid c3">
+<a class="card-link" href="https://freimoser.github.io/ldt-bdt-viewer/"><h3>LDT &amp; BDT Viewer</h3><p>Labordaten (LDT) und Praxisdaten-Exporte (BDT) lesen.</p></a>
+<a class="card-link" href="https://freimoser.github.io/gdt-viewer/"><h3>GDT Viewer</h3><p>GDT-Dateien (Geräte- und Praxis-Datenträger) anzeigen.</p></a>
+<a class="card-link" href="https://freimoser.github.io/dicom-viewer/"><h3>DICOM Viewer</h3><p>Röntgen-, CT- und MRT-Bilder samt Radiologie-CD öffnen.</p></a>
+<a class="card-link" href="https://freimoser.github.io/e-rechnung-klartext/"><h3>E-Rechnung Klartext</h3><p>XRechnung und ZUGFeRD als Klartext lesen.</p></a>
+</div>
+<p class="small">Überblick über die Formate: <a href="https://freimoser.github.io/dicom-viewer/medizinische-datenformate/">Medizinische Datenformate: DICOM, LDT, BDT, GDT</a>.</p>
+</section>
+</main>
+<section class="about" aria-labelledby="entwickler"><div class="wrap">
+<h2 id="entwickler">Über den Entwickler</h2>
+<p>Entwickelt von <a href="https://freimoser.de/">Thomas Freimoser</a> (München / Remote). Der Quellcode ist offen: <a href="https://github.com/freimoser/cda-viewer">github.com/freimoser/cda-viewer</a>. Kontakt über das <a href="https://freimoser.de/impressum/">Impressum</a>; Profil auf <a href="https://www.linkedin.com/in/thomas-freimoser/">LinkedIn</a>.</p>
+</div></section>
+<footer class="site"><div class="wrap">
+<div class="cols">
+<div><h2>CDA-Viewer</h2><ul>
+<li><a href="/cda-viewer/">Viewer</a></li>
+<li><a href="/cda-viewer/cda-datei-oeffnen/">CDA-Datei öffnen</a></li>
+<li><a href="/cda-viewer/cda-arztbrief-lesen/">Arztbrief lesen</a></li>
+<li><a href="/cda-viewer/was-ist-cda/">Was ist HL7 CDA?</a></li>
+<li><a href="/cda-viewer/quellen/">Quellen</a></li>
+<li><a href="https://github.com/freimoser/cda-viewer">Quellcode auf GitHub</a></li>
+</ul></div>
+<div><h2>Weitere Werkzeuge</h2><ul>
+<li><a href="https://freimoser.github.io/ldt-bdt-viewer/">LDT &amp; BDT Viewer</a></li>
+<li><a href="https://freimoser.github.io/gdt-viewer/">GDT Viewer</a></li>
+<li><a href="https://freimoser.github.io/dicom-viewer/">DICOM Viewer</a></li>
+<li><a href="https://freimoser.github.io/e-rechnung-klartext/">E-Rechnung Klartext</a></li>
+</ul></div>
+<div><h2>Rechtliches</h2><ul>
+<li><a href="https://freimoser.de/impressum/">Impressum</a></li>
+<li><a href="/cda-viewer/datenschutz/">Datenschutz</a></li>
+</ul></div>
+</div>
+<p class="disc">Nur zur Ansicht, kein Medizinprodukt, keine Grundlage für Diagnose oder Behandlung. Keine Cookies, kein Tracking, kein Upload. Stand 27.10.2026. HL7 und FHIR sind eingetragene Marken von HL7 International. Dieses Werkzeug steht in keiner Verbindung zu HL7 International oder zu HL7 Deutschland und wird von diesen weder unterstützt noch empfohlen. Die Bezeichnungen werden nur zur Benennung der Formate verwendet.</p>
+</div></footer>
+<script type="module" src="/cda-viewer/assets/js/menu.mjs"></script>
+<script type="module" src="/cda-viewer/assets/js/app.mjs"></script>
+</body>
+</html>

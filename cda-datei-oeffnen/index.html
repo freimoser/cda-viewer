@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'none'; connect-src 'none'; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>HL7 CDA-Datei öffnen: XML lesbar anzeigen (Anleitung)</title>
+<meta name="description" content="HL7 CDA-Datei öffnen: Warum XML ohne Stylesheet unlesbar wirkt, wie Sie sie im Browser lesen und was die Fehlermeldungen bedeuten.">
+<link rel="canonical" href="https://freimoser.github.io/cda-viewer/cda-datei-oeffnen/">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="google-site-verification" content="6pYvtFCnU7UFcQFajtMSkQ7tYMy3Z_Bt7teKiT5yKNg">
+<meta name="msvalidate.01" content="E1F30DEB311AAF5458907DB431B481AC">
+<meta name="theme-color" content="#0b1210">
+<meta name="author" content="Thomas Freimoser">
+<link rel="icon" href="/cda-viewer/favicon.ico" sizes="48x48">
+<link rel="icon" href="/cda-viewer/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/cda-viewer/favicon-96.png" type="image/png" sizes="96x96">
+<link rel="apple-touch-icon" href="/cda-viewer/apple-touch-icon.png" sizes="180x180">
+<link rel="manifest" href="/cda-viewer/site.webmanifest">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="de_DE">
+<meta property="og:site_name" content="CDA-Viewer">
+<meta property="og:title" content="HL7 CDA-Datei öffnen: XML lesbar anzeigen (Anleitung)">
+<meta property="og:description" content="HL7 CDA-Datei öffnen: Warum XML ohne Stylesheet unlesbar wirkt, wie Sie sie im Browser lesen und was die Fehlermeldungen bedeuten.">
+<meta property="og:url" content="https://freimoser.github.io/cda-viewer/cda-datei-oeffnen/">
+<meta property="og:image" content="https://freimoser.github.io/cda-viewer/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="CDA-Viewer: HL7 CDA-Arztbriefe im Browser lesen, ohne Upload">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="HL7 CDA-Datei öffnen: XML lesbar anzeigen (Anleitung)">
+<meta name="twitter:description" content="HL7 CDA-Datei öffnen: Warum XML ohne Stylesheet unlesbar wirkt, wie Sie sie im Browser lesen und was die Fehlermeldungen bedeuten.">
+<meta name="twitter:image" content="https://freimoser.github.io/cda-viewer/og-image.png">
+<link rel="stylesheet" href="/cda-viewer/assets/css/styles.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"HL7 CDA-Datei öffnen: so wird aus XML ein lesbarer Arztbrief","description":"HL7 CDA-Datei öffnen: Warum XML ohne Stylesheet unlesbar wirkt, wie Sie sie im Browser lesen und was die Fehlermeldungen bedeuten.","inLanguage":"de-DE","mainEntityOfPage":"https://freimoser.github.io/cda-viewer/cda-datei-oeffnen/","datePublished":"2026-10-27","dateModified":"2026-10-27","author":{"@type":"Person","@id":"https://freimoser.de/#person","name":"Thomas Freimoser","url":"https://freimoser.de/","sameAs":["https://www.linkedin.com/in/thomas-freimoser/"]},"publisher":{"@type":"Person","@id":"https://freimoser.de/#person","name":"Thomas Freimoser","url":"https://freimoser.de/","sameAs":["https://www.linkedin.com/in/thomas-freimoser/"]},"image":"https://freimoser.github.io/cda-viewer/og-image.png"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"CDA-XML-Datei im Browser lesen","step":[{"@type":"HowToStep","name":"Datei prüfen","text":"Öffnen Sie die Datei in einem Texteditor und prüfen Sie, ob sie mit dem Element ClinicalDocument im Namensraum urn:hl7-org:v3 beginnt."},{"@type":"HowToStep","name":"Im Viewer öffnen","text":"Ziehen Sie die Datei in den CDA-Viewer oder fügen Sie den XML-Text ein."},{"@type":"HowToStep","name":"Ansicht wählen","text":"Wechseln Sie zwischen Dokument, Strukturdaten und Roh-XML."},{"@type":"HowToStep","name":"Hinweise lesen","text":"Lesen Sie die Plausibilitätshinweise zu fehlenden Bestandteilen."},{"@type":"HowToStep","name":"Drucken","text":"Nutzen Sie die Druckansicht und speichern Sie das Ergebnis im Druckdialog als PDF."}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"CDA-Viewer","item":"https://freimoser.github.io/cda-viewer/"},{"@type":"ListItem","position":2,"name":"CDA-Datei öffnen","item":"https://freimoser.github.io/cda-viewer/cda-datei-oeffnen/"}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Zum Inhalt springen</a>
+<header class="top"><div class="wrap">
+<a class="brand" href="/cda-viewer/"><img src="/cda-viewer/favicon.svg" alt="" width="28" height="28"><span>CDA-Viewer</span></a>
+<button class="menu-btn" id="menu-btn" type="button" aria-label="Menü" aria-expanded="false" aria-controls="site-nav"><span></span></button>
+<nav class="main" id="site-nav" aria-label="Hauptnavigation">
+<a href="/cda-viewer/">Viewer</a>
+<a href="/cda-viewer/cda-datei-oeffnen/" aria-current="page">CDA-Datei öffnen</a>
+<a href="/cda-viewer/cda-arztbrief-lesen/">Arztbrief lesen</a>
+<a href="/cda-viewer/was-ist-cda/">Was ist CDA?</a>
+<a href="/cda-viewer/quellen/">Quellen</a>
+</nav>
+</div></header>
+<main id="main" class="wrap">
+<nav class="crumbs" aria-label="Brotkrumen"><ol>
+<li><a href="/cda-viewer/">CDA-Viewer</a></li>
+<li aria-current="page">CDA-Datei öffnen</li>
+</ol></nav>
+<h1>HL7 CDA-Datei öffnen: so wird aus XML ein lesbarer Arztbrief</h1>
+<p class="lead">Eine CDA-Datei ist XML. Ohne passendes Stylesheet zeigt der Browser nur den Elementbaum oder nackten Text. Mit dem <a href="/cda-viewer/">CDA-Viewer</a> lesen Sie Kopf, Abschnitte und Einträge, ohne etwas zu installieren oder hochzuladen.</p>
+<div class="mdr" role="note">Nur zur Ansicht, kein Medizinprodukt, keine Grundlage für Diagnose oder Behandlung. Ihre Dateien bleiben auf Ihrem Gerät: Es gibt keinen Upload.</div>
+<div class="content">
+<h2>In fünf Schritten</h2>
+<ol class="steps">
+<li><h3>Datei erkennen</h3><p>CDA-Dateien enden meist auf <code>.xml</code>. Öffnen Sie die Datei in einem Texteditor: Sie muss mit dem Element <code>ClinicalDocument</code> im Namensraum <code>urn:hl7-org:v3</code> beginnen.</p><pre class="code"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;ClinicalDocument xmlns=&quot;urn:hl7-org:v3&quot;&gt;
+  &lt;typeId root=&quot;2.16.840.1.113883.1.3&quot; extension=&quot;POCD_HD000040&quot;/&gt;
+  &lt;id root=&quot;…&quot; extension=&quot;…&quot;/&gt;
+  &lt;code code=&quot;…&quot; codeSystem=&quot;2.16.840.1.113883.6.1&quot;/&gt;
+  …
+&lt;/ClinicalDocument&gt;</code></pre></li>
+<li><h3>Im Viewer öffnen</h3><p>Ziehen Sie die Datei in das Feld auf der <a href="/cda-viewer/#viewer">Startseite</a>, wählen Sie sie aus oder fügen Sie den XML-Text ein. Die Datei wird nicht übertragen.</p></li>
+<li><h3>Ansicht wählen</h3><p>„Dokument“ zeigt den Brief mit Inhaltsverzeichnis. „Strukturdaten“ listet Kopf und codierte Einträge als Tabellen. „Roh-XML“ zeigt den Quelltext, wahlweise eingerückt.</p></li>
+<li><h3>Hinweise lesen</h3><p>Über dem Dokument stehen Plausibilitätshinweise, etwa wenn Kopfbestandteile fehlen. Sie ersetzen keine Validierung.</p></li>
+<li><h3>Drucken oder als PDF sichern</h3><p>„Druckansicht“ öffnet den Druckdialog des Browsers. Gedruckt wird nur das Dokument. Wählen Sie dort „Als PDF speichern“, wenn Sie eine Datei brauchen.</p></li>
+</ol>
+<h2>Warum eine CDA-Datei im Browser unlesbar aussieht</h2>
+<p>CDA trennt Inhalt und Darstellung. Der Standard verlangt, dass jedes Dokument seine klinischen Informationen in lesbarer Form enthält, und dass sich der Inhalt mit „einem einzigen Stylesheet und marktüblichen Browsern“ darstellen lässt (Quelle: <a href="https://download.hl7.de/documents/cdar2-arztbrief/Leitfaden-VHitG-Arztbrief-v150.pdf">VHitG-Arztbrief-Leitfaden v1.50 (HL7 Deutschland)</a>, Kapitel 3.3.6). Die Darstellung selbst liefert die Datei nicht mit. Üblich ist eine Verknüpfung zu einem XSL-Stylesheet über die Verarbeitungsanweisung <code>xml-stylesheet</code>. Die drei C-CDA-Beispiele von HL7 im Viewer enthalten genau diese Zeile mit <code>href="CDA.xsl"</code>. Liegt das Stylesheet nicht neben der Datei, bleibt dem Browser nur der Elementbaum.</p>
+<h2 id="xslt">Warum dieser Viewer ohne XSLT arbeitet</h2>
+<p>Chromium hat XSLT (einschließlich der <code>XSLTProcessor</code>-API und der Verarbeitungsanweisung <code>xml-stylesheet</code>) offiziell als veraltet erklärt. Nach der Planung von Chrome stoppt XSLT in Chrome 158 am 17. November 2026 für alle Nutzer außer Teilnehmern des Origin Trials und einer Enterprise Policy, in Chrome 176 am 17. August 2027 für alle. Firefox und WebKit haben ebenfalls Pläne zur Entfernung angedeutet (Quelle: <a href="https://developer.chrome.com/docs/web-platform/deprecating-xslt">Chrome for Developers, Removing XSLT for a more secure browser</a>). Ein Verfahren, das nur auf einem Stylesheet im Browser beruht, kann damit ausfallen.</p>
+<p>Der CDA-Viewer liest die Datei deshalb mit dem XML-Parser des Browsers (<code>DOMParser</code>) und erzeugt die Ansicht mit eigenem Code. Das hat zwei Folgen: Er braucht kein Stylesheet, und er kann den Text der Abschnitte streng filtern. Aus dem Narrativtext übernimmt er nur eine feste Liste von Elementen (Absätze, Listen, Tabellen, Hervorhebungen, Links mit http, https oder mailto). Skripte, Formulare, Bilder und unbekannte Elemente erscheinen nicht; bei unbekannten Elementen bleibt nur der Text.</p>
+<h2 id="fehler">Häufige Fehler und was sie bedeuten</h2>
+<p>Die Meldungen unten stammen aus dem Viewer. Fehler erscheinen als Klartext im Statusbereich über der Ansicht, nicht als Skriptfehler.</p>
+<dl class="errlist">
+<dt><code>Die Datei ist kein wohlgeformtes XML.</code></dt>
+<dd>Der XML-Parser des Browsers hat die Datei abgelehnt; seine Meldung steht dabei. Häufige Ursachen: abgeschnittene Datei, nicht maskierte Zeichen wie <code>&amp;</code> oder <code>&lt;</code> im Text, oder die Datei ist gar kein XML (zum Beispiel ein PDF oder eine HL7-v2-Nachricht mit senkrechten Strichen).</dd>
+<dt><code>Kein CDA-Dokument: Wurzelelement ist „Bundle“.</code></dt>
+<dd>Das Wurzelelement ist nicht <code>ClinicalDocument</code>. Bei <code>Bundle</code> oder <code>Composition</code> handelt es sich um FHIR, bei Elementen wie <code>PRPA_IN201301UV02</code> um eine HL7-v3-Nachricht. Beides sind keine CDA-Dokumente. Zum Unterschied siehe <a href="/cda-viewer/was-ist-cda/">Was ist HL7 CDA?</a>.</dd>
+<dt><code>Die Datei enthält eine DOCTYPE- oder ENTITY-Deklaration und wird nicht geladen.</code></dt>
+<dd>CDA-Dokumente brauchen keine DOCTYPE-Deklaration. Der Viewer lädt solche Dateien nicht, um Angriffe über Entity-Expansion auszuschließen. Entfernen Sie die Zeile, wenn Sie der Datei vertrauen.</dd>
+<dt><code>Die Datei ist größer als 15 MB.</code></dt>
+<dd>Der Viewer ist für Dokumente im Bereich weniger Megabyte gedacht. Große Dateien enthalten oft eingebettete Anhänge, etwa ein PDF in einem <code>nonXMLBody</code>.</dd>
+<dt><code>Das Wurzelelement liegt nicht im Namensraum „urn:hl7-org:v3“</code></dt>
+<dd>Das Dokument heißt zwar <code>ClinicalDocument</code>, hat aber keinen oder einen anderen Namensraum. Der Viewer zeigt es trotzdem an und warnt. Prüfen Sie das Attribut <code>xmlns</code> am Wurzelelement.</dd>
+<dt><code>Der structuredBody enthält keine Abschnitte (section).</code></dt>
+<dd>Kein Fehler im Viewer: Das Dokument hat einen Body ohne Abschnitte. Beim eArztbrief nach KBV-Richtlinie ist das erlaubt, der Inhalt steht dann im PDF/A. Mehr unter <a href="/cda-viewer/cda-arztbrief-lesen/#earztbrief">Arztbrief lesen</a>.</dd>
+<dt><code>Der Body ist ein nonXMLBody …</code></dt>
+<dd>Der Inhalt steckt als eingebettetes Dokument im XML. Der Viewer zeigt nur den Kopf und markiert die Stelle.</dd>
+<dt><code>… Text-Verweis(e) (reference value=&quot;#…&quot;) zeigen auf eine ID, die im Dokument nicht vorkommt.</code></dt>
+<dd>Ein codierter Eintrag verweist auf eine Stelle im Text, die es nicht gibt. Das deutet auf einen Fehler im erzeugenden System hin. Der Viewer zeigt die Daten trotzdem an.</dd>
+</dl>
+<h2>Andere XML-Formate im Browser lesen</h2>
+<p>Das Problem „XML ohne lesbare Ansicht“ gibt es auch bei Rechnungen: <a href="https://freimoser.github.io/e-rechnung-klartext/">E-Rechnung Klartext</a> liest XRechnung und ZUGFeRD im Browser. Ist Ihre Datei FHIR statt CDA, hilft ein FHIR-Viewer, bei HL7-v2-Nachrichten ein HL7-v2-Viewer. Die Liste steht unten bei den weiteren Werkzeugen.</p>
+</div>
+<section class="tools2" aria-labelledby="werkzeuge"><h2 id="werkzeuge">Weitere Werkzeuge</h2>
+<p>Andere Datenformate aus dem Gesundheitswesen, ebenfalls lokal im Browser:</p>
+<div class="grid c3">
+<a class="card-link" href="https://freimoser.github.io/ldt-bdt-viewer/"><h3>LDT &amp; BDT Viewer</h3><p>Labordaten (LDT) und Praxisdaten-Exporte (BDT) lesen.</p></a>
+<a class="card-link" href="https://freimoser.github.io/gdt-viewer/"><h3>GDT Viewer</h3><p>GDT-Dateien (Geräte- und Praxis-Datenträger) anzeigen.</p></a>
+<a class="card-link" href="https://freimoser.github.io/dicom-viewer/"><h3>DICOM Viewer</h3><p>Röntgen-, CT- und MRT-Bilder samt Radiologie-CD öffnen.</p></a>
+<a class="card-link" href="https://freimoser.github.io/e-rechnung-klartext/"><h3>E-Rechnung Klartext</h3><p>XRechnung und ZUGFeRD als Klartext lesen.</p></a>
+</div>
+<p class="small">Überblick über die Formate: <a href="https://freimoser.github.io/dicom-viewer/medizinische-datenformate/">Medizinische Datenformate: DICOM, LDT, BDT, GDT</a>.</p>
+</section>
+</main>
+<section class="about" aria-labelledby="entwickler"><div class="wrap">
+<h2 id="entwickler">Über den Entwickler</h2>
+<p>Entwickelt von <a href="https://freimoser.de/">Thomas Freimoser</a> (München / Remote). Der Quellcode ist offen: <a href="https://github.com/freimoser/cda-viewer">github.com/freimoser/cda-viewer</a>. Kontakt über das <a href="https://freimoser.de/impressum/">Impressum</a>; Profil auf <a href="https://www.linkedin.com/in/thomas-freimoser/">LinkedIn</a>.</p>
+</div></section>
+<footer class="site"><div class="wrap">
+<div class="cols">
+<div><h2>CDA-Viewer</h2><ul>
+<li><a href="/cda-viewer/">Viewer</a></li>
+<li><a href="/cda-viewer/cda-datei-oeffnen/">CDA-Datei öffnen</a></li>
+<li><a href="/cda-viewer/cda-arztbrief-lesen/">Arztbrief lesen</a></li>
+<li><a href="/cda-viewer/was-ist-cda/">Was ist HL7 CDA?</a></li>
+<li><a href="/cda-viewer/quellen/">Quellen</a></li>
+<li><a href="https://github.com/freimoser/cda-viewer">Quellcode auf GitHub</a></li>
+</ul></div>
+<div><h2>Weitere Werkzeuge</h2><ul>
+<li><a href="https://freimoser.github.io/ldt-bdt-viewer/">LDT &amp; BDT Viewer</a></li>
+<li><a href="https://freimoser.github.io/gdt-viewer/">GDT Viewer</a></li>
+<li><a href="https://freimoser.github.io/dicom-viewer/">DICOM Viewer</a></li>
+<li><a href="https://freimoser.github.io/e-rechnung-klartext/">E-Rechnung Klartext</a></li>
+</ul></div>
+<div><h2>Rechtliches</h2><ul>
+<li><a href="https://freimoser.de/impressum/">Impressum</a></li>
+<li><a href="/cda-viewer/datenschutz/">Datenschutz</a></li>
+</ul></div>
+</div>
+<p class="disc">Nur zur Ansicht, kein Medizinprodukt, keine Grundlage für Diagnose oder Behandlung. Keine Cookies, kein Tracking, kein Upload. Stand 27.10.2026. HL7 und FHIR sind eingetragene Marken von HL7 International. Dieses Werkzeug steht in keiner Verbindung zu HL7 International oder zu HL7 Deutschland und wird von diesen weder unterstützt noch empfohlen. Die Bezeichnungen werden nur zur Benennung der Formate verwendet.</p>
+</div></footer>
+<script type="module" src="/cda-viewer/assets/js/menu.mjs"></script>
+</body>
+</html>

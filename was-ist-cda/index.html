@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'none'; connect-src 'none'; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Was ist HL7 CDA? Aufbau, C-CDA, HL7 v3 und FHIR</title>
+<meta name="description" content="HL7 CDA (Clinical Document Architecture) erklärt: Header und Body, Level 1 bis 3, Unterschied zu C-CDA und HL7 v3, Einordnung gegenüber FHIR-Dokumenten.">
+<link rel="canonical" href="https://freimoser.github.io/cda-viewer/was-ist-cda/">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="google-site-verification" content="6pYvtFCnU7UFcQFajtMSkQ7tYMy3Z_Bt7teKiT5yKNg">
+<meta name="msvalidate.01" content="E1F30DEB311AAF5458907DB431B481AC">
+<meta name="theme-color" content="#0b1210">
+<meta name="author" content="Thomas Freimoser">
+<link rel="icon" href="/cda-viewer/favicon.ico" sizes="48x48">
+<link rel="icon" href="/cda-viewer/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/cda-viewer/favicon-96.png" type="image/png" sizes="96x96">
+<link rel="apple-touch-icon" href="/cda-viewer/apple-touch-icon.png" sizes="180x180">
+<link rel="manifest" href="/cda-viewer/site.webmanifest">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="de_DE">
+<meta property="og:site_name" content="CDA-Viewer">
+<meta property="og:title" content="Was ist HL7 CDA? Aufbau, C-CDA, HL7 v3 und FHIR">
+<meta property="og:description" content="HL7 CDA (Clinical Document Architecture) erklärt: Header und Body, Level 1 bis 3, Unterschied zu C-CDA und HL7 v3, Einordnung gegenüber FHIR-Dokumenten.">
+<meta property="og:url" content="https://freimoser.github.io/cda-viewer/was-ist-cda/">
+<meta property="og:image" content="https://freimoser.github.io/cda-viewer/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="CDA-Viewer: HL7 CDA-Arztbriefe im Browser lesen, ohne Upload">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Was ist HL7 CDA? Aufbau, C-CDA, HL7 v3 und FHIR">
+<meta name="twitter:description" content="HL7 CDA (Clinical Document Architecture) erklärt: Header und Body, Level 1 bis 3, Unterschied zu C-CDA und HL7 v3, Einordnung gegenüber FHIR-Dokumenten.">
+<meta name="twitter:image" content="https://freimoser.github.io/cda-viewer/og-image.png">
+<link rel="stylesheet" href="/cda-viewer/assets/css/styles.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Was ist HL7 CDA (Clinical Document Architecture)?","description":"HL7 CDA (Clinical Document Architecture) erklärt: Header und Body, Level 1 bis 3, Unterschied zu C-CDA und HL7 v3, Einordnung gegenüber FHIR-Dokumenten.","inLanguage":"de-DE","mainEntityOfPage":"https://freimoser.github.io/cda-viewer/was-ist-cda/","datePublished":"2026-10-27","dateModified":"2026-10-27","author":{"@type":"Person","@id":"https://freimoser.de/#person","name":"Thomas Freimoser","url":"https://freimoser.de/","sameAs":["https://www.linkedin.com/in/thomas-freimoser/"]},"publisher":{"@type":"Person","@id":"https://freimoser.de/#person","name":"Thomas Freimoser","url":"https://freimoser.de/","sameAs":["https://www.linkedin.com/in/thomas-freimoser/"]},"image":"https://freimoser.github.io/cda-viewer/og-image.png"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"CDA-Viewer","item":"https://freimoser.github.io/cda-viewer/"},{"@type":"ListItem","position":2,"name":"Was ist HL7 CDA?","item":"https://freimoser.github.io/cda-viewer/was-ist-cda/"}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Zum Inhalt springen</a>
+<header class="top"><div class="wrap">
+<a class="brand" href="/cda-viewer/"><img src="/cda-viewer/favicon.svg" alt="" width="28" height="28"><span>CDA-Viewer</span></a>
+<button class="menu-btn" id="menu-btn" type="button" aria-label="Menü" aria-expanded="false" aria-controls="site-nav"><span></span></button>
+<nav class="main" id="site-nav" aria-label="Hauptnavigation">
+<a href="/cda-viewer/">Viewer</a>
+<a href="/cda-viewer/cda-datei-oeffnen/">CDA-Datei öffnen</a>
+<a href="/cda-viewer/cda-arztbrief-lesen/">Arztbrief lesen</a>
+<a href="/cda-viewer/was-ist-cda/" aria-current="page">Was ist CDA?</a>
+<a href="/cda-viewer/quellen/">Quellen</a>
+</nav>
+</div></header>
+<main id="main" class="wrap">
+<nav class="crumbs" aria-label="Brotkrumen"><ol>
+<li><a href="/cda-viewer/">CDA-Viewer</a></li>
+<li aria-current="page">Was ist HL7 CDA?</li>
+</ol></nav>
+<h1>Was ist HL7 CDA (Clinical Document Architecture)?</h1>
+<p class="lead">HL7 CDA ist ein XML-Standard für klinische Dokumente wie Entlassbriefe, Überweisungen, Behandlungsdokumentation oder OP-Berichte. Diese Seite ordnet CDA, C-CDA, HL7 v3 und FHIR ein. Die Datei selbst lesen Sie im <a href="/cda-viewer/">CDA-Viewer</a>.</p>
+<div class="content">
+<h2>Definition</h2>
+<p>Die Clinical Document Architecture ist laut VHitG-Leitfaden ein Standard für den Austausch und die Speicherung klinischer Dokumentation; sie nutzt XML und wird von HL7 entwickelt. CDA Release 1 wurde im September 2000 verabschiedet, CDA Release 2 im Juli 2005 zum ANSI-Standard erhoben (Quelle: <a href="https://download.hl7.de/documents/cdar2-arztbrief/Leitfaden-VHitG-Arztbrief-v150.pdf">VHitG-Arztbrief-Leitfaden v1.50 (HL7 Deutschland)</a>, Kapitel 3.2). Heute meint „CDA“ im Alltag fast immer Release 2 (CDA R2).</p>
+<p>Die Abkürzung CDA wird auch in anderen Bereichen verwendet; auf dieser Seite ist immer HL7 CDA gemeint.</p>
+<h2>Sechs Eigenschaften eines CDA-Dokuments</h2>
+<p>Der Standard nennt sechs Kerneigenschaften (Quelle: <a href="https://download.hl7.de/documents/cdar2-arztbrief/Leitfaden-VHitG-Arztbrief-v150.pdf">VHitG-Arztbrief-Leitfaden v1.50 (HL7 Deutschland)</a>, Kapitel 3.3):</p>
+<ol>
+<li><strong>Persistenz:</strong> das Dokument existiert dauerhaft in den sendenden oder empfangenden Systemen.</li>
+<li><strong>Verantwortlichkeit für die Verwaltung:</strong> eine Organisation verwaltet das Dokument.</li>
+<li><strong>Signaturfähigkeit:</strong> die Informationen können potenziell signiert werden.</li>
+<li><strong>Kontext:</strong> alle Informationen stehen in einem bestimmten Kontext, zum Beispiel der Entlassung.</li>
+<li><strong>Ganzheit:</strong> der Inhalt bezieht sich auf das Dokument als Ganzes; Teile sind ohne Bezug zum Dokument nicht verwendbar.</li>
+<li><strong>Lesbarkeit:</strong> jedes Dokument muss die klinischen Informationen in lesbarer Form enthalten.</li>
+</ol>
+<h2>Aufbau: Header, Body, Level</h2>
+<p>Ein CDA-Dokument hat einen <strong>Header</strong> (Dokumenttyp, Datum, Patient, Autor, Verwahrer, Beteiligte) und einen <strong>Body</strong> aus Abschnitten mit narrativem Text und optional <strong>Entries</strong>, den maschinenlesbaren Einzelinformationen (Quelle: <a href="https://download.hl7.de/documents/cdar2-arztbrief/Leitfaden-VHitG-Arztbrief-v150.pdf">VHitG-Arztbrief-Leitfaden v1.50 (HL7 Deutschland)</a>, Kapitel 3.4). Der Body kann auch als <code>nonXMLBody</code> ein eingebettetes Dokument enthalten.</p>
+<pre class="code"><code>&lt;ClinicalDocument xmlns=&quot;urn:hl7-org:v3&quot;&gt;
+  &lt;!-- Header --&gt;
+  &lt;recordTarget&gt;…&lt;/recordTarget&gt;
+  &lt;author&gt;…&lt;/author&gt;
+  &lt;custodian&gt;…&lt;/custodian&gt;
+  &lt;!-- Body --&gt;
+  &lt;component&gt;
+    &lt;structuredBody&gt;
+      &lt;component&gt;
+        &lt;section&gt;
+          &lt;code code=&quot;11450-4&quot; codeSystem=&quot;2.16.840.1.113883.6.1&quot;/&gt;
+          &lt;title&gt;Probleme&lt;/title&gt;
+          &lt;text&gt;…lesbarer Text…&lt;/text&gt;
+          &lt;entry&gt;…codierte Information (Level 3)…&lt;/entry&gt;
+        &lt;/section&gt;
+      &lt;/component&gt;
+    &lt;/structuredBody&gt;
+  &lt;/component&gt;
+&lt;/ClinicalDocument&gt;</code></pre>
+<p>Die Level 1 bis 3 beschreiben, wie fein das Dokument codiert ist. Die Erklärung samt Heuristik des Viewers steht unter <a href="/cda-viewer/cda-arztbrief-lesen/#level">Arztbrief lesen</a>.</p>
+<h2>CDA, C-CDA und HL7 v3</h2>
+<ul>
+<li><strong>HL7 v3:</strong> CDA gehört zur „Familie“ der HL7-Version-3-Standards und beruht auf dem Referenz-Informationsmodell (RIM) (Quelle: <a href="https://download.hl7.de/documents/cdar2-arztbrief/Leitfaden-VHitG-Arztbrief-v150.pdf">VHitG-Arztbrief-Leitfaden v1.50 (HL7 Deutschland)</a>). v3 umfasst auch Nachrichten, die Daten zwischen Systemen austauschen; ein CDA-Dokument ist keine solche Nachricht.</li>
+<li><strong>C-CDA:</strong> Consolidated CDA ist ein Implementierungsleitfaden für die USA. Er wird zusammen mit dem Standard CDA R2 verwendet und definiert Dokumenttypen wie Care Plan, Consultation Note, Continuity of Care Document (CCD) und Discharge Summary sowie Header-Vorgaben (Quelle: <a href="https://hl7.org/cda/us/ccda/">HL7 International, Consolidated CDA (C-CDA) v5.0.0, IG Home</a>). Die drei englischen Beispiele im Viewer sind C-CDA-Dokumente.</li>
+<li><strong>Deutsche Leitfäden:</strong> der Arztbrief-Leitfaden von HL7 Deutschland ist ein anderer Implementierungsleitfaden auf derselben Basis, siehe <a href="/cda-viewer/cda-arztbrief-lesen/">Arztbrief lesen</a>.</li>
+</ul>
+<p>Ein Implementierungsleitfaden schränkt CDA ein: Er legt fest, welche Abschnitte, Codes und Einträge ein Dokumenttyp enthält. Dasselbe XML-Grundgerüst kann deshalb je nach Leitfaden verschieden aussehen.</p>
+<h2>CDA und FHIR</h2>
+<p>FHIR beschreibt Dokumente anders: Ein FHIR-Dokument ist ein <code>Bundle</code> vom Typ <code>document</code>, das mit einer <code>Composition</code> beginnt und weitere Ressourcen enthält, auf die die Composition verweist. Das Bundle fasst den gesamten Inhalt in einem einzigen XML- oder JSON-Dokument zusammen (Quelle: <a href="https://www.hl7.org/fhir/documents.html">HL7 International, FHIR Documents</a>). FHIR-Dokumente sind laut Spezifikation für Dokumente gedacht, die in FHIR erstellt und zusammengestellt werden; die Ressource <code>DocumentReference</code> verweist allgemein auf Dokumente, auch auf PDFs und CDAs.</p>
+<p>Für die Praxis heißt das: Beide Formate bilden Dokumente ab, welches vorkommt, bestimmt der Anwendungsfall und der jeweilige Leitfaden. Eine FHIR-Datei erkennen Sie am Wurzelelement (<code>Bundle</code>, <code>Composition</code>); der CDA-Viewer meldet dann „Kein CDA-Dokument“. Wichtig für die Abgrenzung: CDA ist immer XML, FHIR gibt es als XML und als JSON.</p>
+<h2>Was CDA nicht ist</h2>
+<ul>
+<li>Kein Bildformat: Röntgen-, CT- und MRT-Bilder liegen als DICOM vor. Ein CDA-Dokument kann auf sie verweisen.</li>
+<li>Kein Nachrichtenformat wie HL7 v2, das Ereignisse zwischen Systemen überträgt.</li>
+<li>Keine Darstellung: CDA enthält den lesbaren Text, die Gestaltung liefert die anzeigende Software.</li>
+</ul>
+</div>
+<section class="tools2" aria-labelledby="werkzeuge"><h2 id="werkzeuge">Weitere Werkzeuge</h2>
+<p>Andere Datenformate aus dem Gesundheitswesen, ebenfalls lokal im Browser:</p>
+<div class="grid c3">
+<a class="card-link" href="https://freimoser.github.io/ldt-bdt-viewer/"><h3>LDT &amp; BDT Viewer</h3><p>Labordaten (LDT) und Praxisdaten-Exporte (BDT) lesen.</p></a>
+<a class="card-link" href="https://freimoser.github.io/gdt-viewer/"><h3>GDT Viewer</h3><p>GDT-Dateien (Geräte- und Praxis-Datenträger) anzeigen.</p></a>
+<a class="card-link" href="https://freimoser.github.io/dicom-viewer/"><h3>DICOM Viewer</h3><p>Röntgen-, CT- und MRT-Bilder samt Radiologie-CD öffnen.</p></a>
+<a class="card-link" href="https://freimoser.github.io/e-rechnung-klartext/"><h3>E-Rechnung Klartext</h3><p>XRechnung und ZUGFeRD als Klartext lesen.</p></a>
+</div>
+<p class="small">Überblick über die Formate: <a href="https://freimoser.github.io/dicom-viewer/medizinische-datenformate/">Medizinische Datenformate: DICOM, LDT, BDT, GDT</a>.</p>
+</section>
+</main>
+<section class="about" aria-labelledby="entwickler"><div class="wrap">
+<h2 id="entwickler">Über den Entwickler</h2>
+<p>Entwickelt von <a href="https://freimoser.de/">Thomas Freimoser</a> (München / Remote). Der Quellcode ist offen: <a href="https://github.com/freimoser/cda-viewer">github.com/freimoser/cda-viewer</a>. Kontakt über das <a href="https://freimoser.de/impressum/">Impressum</a>; Profil auf <a href="https://www.linkedin.com/in/thomas-freimoser/">LinkedIn</a>.</p>
+</div></section>
+<footer class="site"><div class="wrap">
+<div class="cols">
+<div><h2>CDA-Viewer</h2><ul>
+<li><a href="/cda-viewer/">Viewer</a></li>
+<li><a href="/cda-viewer/cda-datei-oeffnen/">CDA-Datei öffnen</a></li>
+<li><a href="/cda-viewer/cda-arztbrief-lesen/">Arztbrief lesen</a></li>
+<li><a href="/cda-viewer/was-ist-cda/">Was ist HL7 CDA?</a></li>
+<li><a href="/cda-viewer/quellen/">Quellen</a></li>
+<li><a href="https://github.com/freimoser/cda-viewer">Quellcode auf GitHub</a></li>
+</ul></div>
+<div><h2>Weitere Werkzeuge</h2><ul>
+<li><a href="https://freimoser.github.io/ldt-bdt-viewer/">LDT &amp; BDT Viewer</a></li>
+<li><a href="https://freimoser.github.io/gdt-viewer/">GDT Viewer</a></li>
+<li><a href="https://freimoser.github.io/dicom-viewer/">DICOM Viewer</a></li>
+<li><a href="https://freimoser.github.io/e-rechnung-klartext/">E-Rechnung Klartext</a></li>
+</ul></div>
+<div><h2>Rechtliches</h2><ul>
+<li><a href="https://freimoser.de/impressum/">Impressum</a></li>
+<li><a href="/cda-viewer/datenschutz/">Datenschutz</a></li>
+</ul></div>
+</div>
+<p class="disc">Nur zur Ansicht, kein Medizinprodukt, keine Grundlage für Diagnose oder Behandlung. Keine Cookies, kein Tracking, kein Upload. Stand 27.10.2026. HL7 und FHIR sind eingetragene Marken von HL7 International. Dieses Werkzeug steht in keiner Verbindung zu HL7 International oder zu HL7 Deutschland und wird von diesen weder unterstützt noch empfohlen. Die Bezeichnungen werden nur zur Benennung der Formate verwendet.</p>
+</div></footer>
+<script type="module" src="/cda-viewer/assets/js/menu.mjs"></script>
+</body>
+</html>

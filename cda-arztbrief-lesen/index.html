@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'none'; connect-src 'none'; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>HL7 CDA-Arztbrief lesen: Aufbau, Level und eArztbrief</title>
+<meta name="description" content="Aufbau eines Arztbriefs nach HL7 CDA R2: Kopf, Abschnitte, LOINC-Codes, Level 1 bis 3, Entries und der eArztbrief nach KBV-Richtlinie.">
+<link rel="canonical" href="https://freimoser.github.io/cda-viewer/cda-arztbrief-lesen/">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="google-site-verification" content="6pYvtFCnU7UFcQFajtMSkQ7tYMy3Z_Bt7teKiT5yKNg">
+<meta name="msvalidate.01" content="E1F30DEB311AAF5458907DB431B481AC">
+<meta name="theme-color" content="#0b1210">
+<meta name="author" content="Thomas Freimoser">
+<link rel="icon" href="/cda-viewer/favicon.ico" sizes="48x48">
+<link rel="icon" href="/cda-viewer/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/cda-viewer/favicon-96.png" type="image/png" sizes="96x96">
+<link rel="apple-touch-icon" href="/cda-viewer/apple-touch-icon.png" sizes="180x180">
+<link rel="manifest" href="/cda-viewer/site.webmanifest">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="de_DE">
+<meta property="og:site_name" content="CDA-Viewer">
+<meta property="og:title" content="HL7 CDA-Arztbrief lesen: Aufbau, Level und eArztbrief">
+<meta property="og:description" content="Aufbau eines Arztbriefs nach HL7 CDA R2: Kopf, Abschnitte, LOINC-Codes, Level 1 bis 3, Entries und der eArztbrief nach KBV-Richtlinie.">
+<meta property="og:url" content="https://freimoser.github.io/cda-viewer/cda-arztbrief-lesen/">
+<meta property="og:image" content="https://freimoser.github.io/cda-viewer/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="CDA-Viewer: HL7 CDA-Arztbriefe im Browser lesen, ohne Upload">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="HL7 CDA-Arztbrief lesen: Aufbau, Level und eArztbrief">
+<meta name="twitter:description" content="Aufbau eines Arztbriefs nach HL7 CDA R2: Kopf, Abschnitte, LOINC-Codes, Level 1 bis 3, Entries und der eArztbrief nach KBV-Richtlinie.">
+<meta name="twitter:image" content="https://freimoser.github.io/cda-viewer/og-image.png">
+<link rel="stylesheet" href="/cda-viewer/assets/css/styles.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"HL7 CDA-Arztbrief lesen: Kopf, Abschnitte und Einträge erklärt","description":"Aufbau eines Arztbriefs nach HL7 CDA R2: Kopf, Abschnitte, LOINC-Codes, Level 1 bis 3, Entries und der eArztbrief nach KBV-Richtlinie.","inLanguage":"de-DE","mainEntityOfPage":"https://freimoser.github.io/cda-viewer/cda-arztbrief-lesen/","datePublished":"2026-10-27","dateModified":"2026-10-27","author":{"@type":"Person","@id":"https://freimoser.de/#person","name":"Thomas Freimoser","url":"https://freimoser.de/","sameAs":["https://www.linkedin.com/in/thomas-freimoser/"]},"publisher":{"@type":"Person","@id":"https://freimoser.de/#person","name":"Thomas Freimoser","url":"https://freimoser.de/","sameAs":["https://www.linkedin.com/in/thomas-freimoser/"]},"image":"https://freimoser.github.io/cda-viewer/og-image.png"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"CDA-Viewer","item":"https://freimoser.github.io/cda-viewer/"},{"@type":"ListItem","position":2,"name":"Arztbrief lesen","item":"https://freimoser.github.io/cda-viewer/cda-arztbrief-lesen/"}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Zum Inhalt springen</a>
+<header class="top"><div class="wrap">
+<a class="brand" href="/cda-viewer/"><img src="/cda-viewer/favicon.svg" alt="" width="28" height="28"><span>CDA-Viewer</span></a>
+<button class="menu-btn" id="menu-btn" type="button" aria-label="Menü" aria-expanded="false" aria-controls="site-nav"><span></span></button>
+<nav class="main" id="site-nav" aria-label="Hauptnavigation">
+<a href="/cda-viewer/">Viewer</a>
+<a href="/cda-viewer/cda-datei-oeffnen/">CDA-Datei öffnen</a>
+<a href="/cda-viewer/cda-arztbrief-lesen/" aria-current="page">Arztbrief lesen</a>
+<a href="/cda-viewer/was-ist-cda/">Was ist CDA?</a>
+<a href="/cda-viewer/quellen/">Quellen</a>
+</nav>
+</div></header>
+<main id="main" class="wrap">
+<nav class="crumbs" aria-label="Brotkrumen"><ol>
+<li><a href="/cda-viewer/">CDA-Viewer</a></li>
+<li aria-current="page">Arztbrief lesen</li>
+</ol></nav>
+<h1>HL7 CDA-Arztbrief lesen: Kopf, Abschnitte und Einträge erklärt</h1>
+<p class="lead">Ein Arztbrief als HL7-CDA-Dokument folgt in Deutschland dem „Implementierungsleitfaden Arztbrief auf Basis der HL7 Clinical Document Architecture, Release 2, für das deutsche Gesundheitswesen“. Diese Seite zeigt, woraus ein solches Dokument besteht und woran Sie es im <a href="/cda-viewer/">CDA-Viewer</a> erkennen. Probieren Sie die zwei fiktiven Beispiele aus: <a href="/cda-viewer/#beispiel=de-arztbrief-entlassbrief">Entlassbrief</a> und <a href="/cda-viewer/#beispiel=de-arztbrief-facharzt-level3">Facharztbrief mit Messwerten</a>.</p>
+<div class="mdr" role="note">Nur zur Ansicht, kein Medizinprodukt, keine Grundlage für Diagnose oder Behandlung. Ihre Dateien bleiben auf Ihrem Gerät: Es gibt keinen Upload.</div>
+<div class="content">
+<h2>Welche Spezifikation?</h2>
+<p>Der VHitG-Leitfaden Version 1.50 (Stand 12.05.2006, Dokumenten-OID 1.2.276.0.76.3.1.13.7.5) ist die Grundlage der Arztbriefe nach CDA R2 in Deutschland. HL7 Deutschland führt ihn auf der Download-Seite als „Arztbrief 2006 (VHitG-Arztbrief v1.50)“ und nennt als Nachfolger den „Arztbrief 2014/2015“ (Quellen: <a href="https://download.hl7.de/documents/cdar2-arztbrief/Leitfaden-VHitG-Arztbrief-v150.pdf">VHitG-Arztbrief-Leitfaden v1.50 (HL7 Deutschland)</a>; <a href="https://hl7.de/downloads/">HL7 Deutschland, Downloads</a>). Welche Version ein Dokument verwendet, steht in dessen <code>templateId</code>. Der Viewer zeigt sie im Kopf an, prüft sie aber nicht gegen einen Leitfaden.</p>
+<h2>Der Kopf (Header)</h2>
+<p>Der Kopf beschreibt das Dokument und seine Beteiligten. Die Kardinalitäten stammen aus dem VHitG-Leitfaden v1.50 (Spalte „Leitfaden“); die Spalte „Im Viewer“ beschreibt, wo Sie das Element finden.</p>
+<div class="tablewrap"><table>
+<thead><tr><th>Element</th><th>Bedeutung</th><th>Leitfaden</th><th>Im Viewer</th></tr></thead>
+<tbody>
+<tr><td><code>id</code></td><td>Dokumenten-ID</td><td>1..1</td><td>Kopf</td></tr>
+<tr><td><code>code</code></td><td>Dokumenttyp (LOINC)</td><td>1..1</td><td>Kopf, Zeile „Dokumenttyp“</td></tr>
+<tr><td><code>title</code></td><td>zusätzliche Bezeichnung</td><td>0..1</td><td>Titel</td></tr>
+<tr><td><code>effectiveTime</code></td><td>Erstellungsdatum</td><td>1..1</td><td>Kopf, als Datum formatiert</td></tr>
+<tr><td><code>confidentialityCode</code></td><td>Vertraulichkeitsgrad</td><td>1..1</td><td>Kopf</td></tr>
+<tr><td><code>languageCode</code></td><td>Sprache</td><td>0..1</td><td>Kopf</td></tr>
+<tr><td><code>recordTarget</code></td><td>Patient: Kennung (1..*), Name, Geburtsdatum, Geschlecht, Adresse</td><td>Kennung 1..*</td><td>Karte „Patient“</td></tr>
+<tr><td><code>author</code></td><td>Autor mit Zeitpunkt (1..1) und Kennung (1..*)</td><td>siehe links</td><td>Karte „Autor“</td></tr>
+<tr><td><code>custodian</code></td><td>für die Verwaltung verantwortliche Organisation, Kennung (1..*)</td><td>Kennung 1..*</td><td>Karte „Verwahrer“</td></tr>
+<tr><td><code>legalAuthenticator</code></td><td>Unterzeichner mit Zeitpunkt und signatureCode</td><td>siehe Leitfaden</td><td>Karte „Rechtlich Unterzeichnender“</td></tr>
+</tbody></table></div>
+<p class="src">Quelle: <a href="https://download.hl7.de/documents/cdar2-arztbrief/Leitfaden-VHitG-Arztbrief-v150.pdf">VHitG-Arztbrief-Leitfaden v1.50 (HL7 Deutschland)</a>. Stand 27.10.2026.</p>
+<h2>Dokumenttypen</h2>
+<p>Der Dokumenttyp steht als LOINC-Code im Element <code>code</code> (Codesystem-OID 2.16.840.1.113883.6.1). Für Entlassbriefe nennt der Leitfaden die „Discharge summarization notes“ (Auszug):</p>
+<div class="tablewrap"><table>
+<thead><tr><th>Code</th><th>Deutsche Bezeichnung</th><th>Berufsgruppe, Umgebung</th></tr></thead>
+<tbody>
+<tr><td>34106-5</td><td>Zusammenfassung bei Entlassung</td><td>Arzt, Krankenhaus</td></tr>
+<tr><td>34105-7</td><td>Zusammenfassung bei Entlassung</td><td>Heilberufler, Krankenhaus</td></tr>
+<tr><td>11490-0</td><td>Zusammenfassung bei Entlassung</td><td>Arzt, ambulante Versorgung</td></tr>
+<tr><td>18842-5</td><td>Zusammenfassung bei Entlassung</td><td>Heilberufler, ambulante Versorgung</td></tr>
+<tr><td>28616-1</td><td>Verlegungsbrief / Zusammenfassung bei Verlegung</td><td>Arzt, ambulante Versorgung</td></tr>
+<tr><td>18733-6</td><td>Bericht über ambulanten Besuch</td><td>ohne Angabe</td></tr>
+<tr><td>11488-4</td><td>Konsilbericht</td><td>ohne Angabe</td></tr>
+</tbody></table></div>
+<p class="src">Quelle: <a href="https://download.hl7.de/documents/cdar2-arztbrief/Leitfaden-VHitG-Arztbrief-v150.pdf">VHitG-Arztbrief-Leitfaden v1.50 (HL7 Deutschland)</a>. Stand 27.10.2026.</p>
+<h2>Abschnitte und Narrativtext</h2>
+<p>Der Body besteht aus Abschnitten (<code>section</code>), die auch ineinander geschachtelt sein können. Jeder Abschnitt enthält verpflichtend einen Text, den narrativen Block; das ist die menschenlesbare Fassung. Im Text sind unter anderem Absätze, Listen, Tabellen, Zeilenumbrüche, Hervorhebungen, Hoch- und Tiefstellung möglich (Quelle: <a href="https://download.hl7.de/documents/cdar2-arztbrief/Leitfaden-VHitG-Arztbrief-v150.pdf">VHitG-Arztbrief-Leitfaden v1.50 (HL7 Deutschland)</a>). Ab Level 2 trägt jeder Abschnitt einen LOINC-Code. Eine Auswahl aus der Tabelle des Leitfadens:</p>
+<div class="tablewrap"><table>
+<thead><tr><th>Code</th><th>Bezeichnung im Leitfaden</th></tr></thead>
+<tbody>
+<tr><td>11450-4</td><td>Liste der Probleme</td></tr>
+<tr><td>29548-5</td><td>Diagnose (Text)</td></tr>
+<tr><td>29308-4</td><td>Diagnose (Codiert)</td></tr>
+<tr><td>10164-2</td><td>Jetzige Anamnese</td></tr>
+<tr><td>8648-8</td><td>Verlauf im Krankenhaus</td></tr>
+<tr><td>10183-2</td><td>Medikamente bei Entlassung</td></tr>
+<tr><td>10155-0</td><td>Allergie-Anamnese</td></tr>
+<tr><td>8716-3</td><td>Vitalparameter, körperliche Untersuchung</td></tr>
+<tr><td>18776-5</td><td>Behandlungsplan, weiteres Vorgehen</td></tr>
+</tbody></table></div>
+<p class="src">Quelle: <a href="https://download.hl7.de/documents/cdar2-arztbrief/Leitfaden-VHitG-Arztbrief-v150.pdf">VHitG-Arztbrief-Leitfaden v1.50 (HL7 Deutschland)</a>. Stand 27.10.2026.</p>
+<h2 id="level">Level 1, 2 und 3</h2>
+<ul>
+<li><strong>Level 1:</strong> ein XML-Dokument, das auf „menschliche Interoperabilität“ zielt, also vor allem lesbar ist. Es gibt keine Einschränkung für Inhalt und Zweck.</li>
+<li><strong>Level 2:</strong> die Abschnitte sind zusätzlich durch Codes klassifiziert, in der Arztbrief-Spezifikation durch LOINC-Codes.</li>
+<li><strong>Level 3:</strong> zusätzlich enthalten die Abschnitte maschinenauswertbare Einzelinformationen (entry), etwa einen systolischen Blutdruck als Beobachtung. Eine Anwendung kann damit einzelne Beobachtungen, Prozeduren oder Medikationen identifizieren und verarbeiten.</li>
+</ul>
+<p class="src">Quelle: <a href="https://download.hl7.de/documents/cdar2-arztbrief/Leitfaden-VHitG-Arztbrief-v150.pdf">VHitG-Arztbrief-Leitfaden v1.50 (HL7 Deutschland)</a>. Stand 27.10.2026.</p>
+<p>Der Viewer schätzt das Level so: Gibt es mindestens ein <code>entry</code>, nimmt er Level 3 an; gibt es codierte Abschnitte ohne Einträge, Level 2; sonst Level 1. Das ist eine Heuristik, kein Konformitätsnachweis.</p>
+<h2>Text und Einträge zusammen lesen</h2>
+<p>Die Ansicht „Dokument“ zeigt den Narrativtext, „Strukturdaten“ die Einträge. Im Level-3-Beispiel steht ein Blutdruck in einer Tabellenzelle des Textes und als Beobachtung im Eintrag. Eine Referenz im Eintrag verweist auf die Zelle (gekürzt aus dem Beispiel):</p>
+<pre class="code"><code>&lt;td ID=&quot;bd1&quot;&gt;148/92 mm[Hg]&lt;/td&gt;   &lt;!-- Narrativtext --&gt;
+…
+&lt;observation classCode=&quot;OBS&quot; moodCode=&quot;EVN&quot;&gt;
+  &lt;code code=&quot;8480-6&quot; codeSystem=&quot;2.16.840.1.113883.6.1&quot;/&gt;
+  &lt;text&gt;&lt;reference value=&quot;#bd1&quot;/&gt;&lt;/text&gt;
+  &lt;value xsi:type=&quot;PQ&quot; value=&quot;148&quot; unit=&quot;mm[Hg]&quot;/&gt;
+&lt;/observation&gt;</code></pre>
+<p>Laut Leitfaden bezieht sich die Lesbarkeit auf den authentifizierten Inhalt; zusätzliche Informationen für Anwendungssysteme müssen weder authentifiziert noch lesbar dargestellt werden, und es muss beschrieben sein, wie strukturierte Inhalte aus dem Text abgeleitet wurden oder umgekehrt (Quelle: <a href="https://download.hl7.de/documents/cdar2-arztbrief/Leitfaden-VHitG-Arztbrief-v150.pdf">VHitG-Arztbrief-Leitfaden v1.50 (HL7 Deutschland)</a>, Kapitel 3.3.6). Der Viewer zeigt Text und Einträge getrennt und warnt, wenn ein Verweis ins Leere läuft.</p>
+<h2 id="earztbrief">eArztbrief nach KBV-Richtlinie</h2>
+<p>In der vertragsärztlichen Versorgung regelt die KBV-Richtlinie zum elektronischen Brief (gemäß § 383 SGB V, in Kraft seit 17.05.2024) den Inhalt: Der Brief muss mindestens eine Datei im Format PDF/A und eine XML-Datei nach dem VHitG-Arztbrief-Leitfaden v1.50 enthalten. Das PDF muss alle zum Arztbrief gehörenden Informationen enthalten. Die XML-Datei darf sich auf Informationen zu Patient und Absenderorganisation beschränken, der <code>body</code> darf leer sein. Vor dem Versand muss der Arzt den Brief mit dem elektronischen Heilberufsausweis qualifiziert signieren (Quelle: <a href="https://www.kbv.de/documents/infothek/rechtsquellen/weitere-vertraege/praxen/telemedizin/rl-earztbrief.pdf">KBV, Richtlinie elektronischer Brief (in Kraft seit 17.05.2024)</a>).</p>
+<p>Versendet wird der eArztbrief laut KBV über den E-Mail-Dienst KIM; seit 30. Juni 2024 müssen Praxen ihn mindestens empfangen können (Quelle: <a href="https://www.kbv.de/praxis/digitalisierung/anwendungen/earztbrief">KBV, eArztbrief: Versand, Empfang und technische Voraussetzungen</a>). Wie Praxissoftware an solche Dienste angebunden wird, ist Sache der Hersteller; eine Plattform zur Anbindung von PVS, AIS und KIS an E-Health-Lösungen ist nach Eigenangabe des Anbieters die <a href="https://flexchange-medical.de/products_flx-suite.php">FLX Suite</a>.</p>
+<p>Für den Viewer folgt daraus: Ein eArztbrief erscheint mit Kopf und ohne Abschnitte, der Hinweis „Der structuredBody enthält keine Abschnitte“ ist dann kein Fehler. Das PDF/A wird nicht angezeigt; öffnen Sie es mit einem PDF-Programm.</p>
+<h2>Was der Viewer bei Arztbriefen nicht leistet</h2>
+<ul>
+<li>Er prüft nicht, ob ein Dokument dem Leitfaden entspricht, und führt keine Schematron-Regeln aus.</li>
+<li>Er prüft keine Signatur, auch nicht die qualifizierte elektronische Signatur eines eArztbriefs.</li>
+<li>Er bewertet keine medizinischen Inhalte und ist kein Medizinprodukt.</li>
+</ul>
+</div>
+<section class="tools2" aria-labelledby="werkzeuge"><h2 id="werkzeuge">Weitere Werkzeuge</h2>
+<p>Andere Datenformate aus dem Gesundheitswesen, ebenfalls lokal im Browser:</p>
+<div class="grid c3">
+<a class="card-link" href="https://freimoser.github.io/ldt-bdt-viewer/"><h3>LDT &amp; BDT Viewer</h3><p>Labordaten (LDT) und Praxisdaten-Exporte (BDT) lesen.</p></a>
+<a class="card-link" href="https://freimoser.github.io/gdt-viewer/"><h3>GDT Viewer</h3><p>GDT-Dateien (Geräte- und Praxis-Datenträger) anzeigen.</p></a>
+<a class="card-link" href="https://freimoser.github.io/dicom-viewer/"><h3>DICOM Viewer</h3><p>Röntgen-, CT- und MRT-Bilder samt Radiologie-CD öffnen.</p></a>
+<a class="card-link" href="https://freimoser.github.io/e-rechnung-klartext/"><h3>E-Rechnung Klartext</h3><p>XRechnung und ZUGFeRD als Klartext lesen.</p></a>
+</div>
+<p class="small">Überblick über die Formate: <a href="https://freimoser.github.io/dicom-viewer/medizinische-datenformate/">Medizinische Datenformate: DICOM, LDT, BDT, GDT</a>.</p>
+</section>
+</main>
+<section class="about" aria-labelledby="entwickler"><div class="wrap">
+<h2 id="entwickler">Über den Entwickler</h2>
+<p>Entwickelt von <a href="https://freimoser.de/">Thomas Freimoser</a> (München / Remote). Der Quellcode ist offen: <a href="https://github.com/freimoser/cda-viewer">github.com/freimoser/cda-viewer</a>. Kontakt über das <a href="https://freimoser.de/impressum/">Impressum</a>; Profil auf <a href="https://www.linkedin.com/in/thomas-freimoser/">LinkedIn</a>.</p>
+</div></section>
+<footer class="site"><div class="wrap">
+<div class="cols">
+<div><h2>CDA-Viewer</h2><ul>
+<li><a href="/cda-viewer/">Viewer</a></li>
+<li><a href="/cda-viewer/cda-datei-oeffnen/">CDA-Datei öffnen</a></li>
+<li><a href="/cda-viewer/cda-arztbrief-lesen/">Arztbrief lesen</a></li>
+<li><a href="/cda-viewer/was-ist-cda/">Was ist HL7 CDA?</a></li>
+<li><a href="/cda-viewer/quellen/">Quellen</a></li>
+<li><a href="https://github.com/freimoser/cda-viewer">Quellcode auf GitHub</a></li>
+</ul></div>
+<div><h2>Weitere Werkzeuge</h2><ul>
+<li><a href="https://freimoser.github.io/ldt-bdt-viewer/">LDT &amp; BDT Viewer</a></li>
+<li><a href="https://freimoser.github.io/gdt-viewer/">GDT Viewer</a></li>
+<li><a href="https://freimoser.github.io/dicom-viewer/">DICOM Viewer</a></li>
+<li><a href="https://freimoser.github.io/e-rechnung-klartext/">E-Rechnung Klartext</a></li>
+</ul></div>
+<div><h2>Rechtliches</h2><ul>
+<li><a href="https://freimoser.de/impressum/">Impressum</a></li>
+<li><a href="/cda-viewer/datenschutz/">Datenschutz</a></li>
+</ul></div>
+</div>
+<p class="disc">Nur zur Ansicht, kein Medizinprodukt, keine Grundlage für Diagnose oder Behandlung. Keine Cookies, kein Tracking, kein Upload. Stand 27.10.2026. HL7 und FHIR sind eingetragene Marken von HL7 International. Dieses Werkzeug steht in keiner Verbindung zu HL7 International oder zu HL7 Deutschland und wird von diesen weder unterstützt noch empfohlen. Die Bezeichnungen werden nur zur Benennung der Formate verwendet.</p>
+</div></footer>
+<script type="module" src="/cda-viewer/assets/js/menu.mjs"></script>
+</body>
+</html>

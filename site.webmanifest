@@ -1,0 +1,29 @@
+{
+ "name": "CDA-Viewer",
+ "short_name": "CDA-Viewer",
+ "description": "HL7 CDA-Arztbriefe im Browser lesen",
+ "lang": "de",
+ "start_url": "/cda-viewer/",
+ "scope": "/cda-viewer/",
+ "display": "standalone",
+ "background_color": "#0b1210",
+ "theme_color": "#0b1210",
+ "icons": [
+  {
+   "src": "/cda-viewer/icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png"
+  },
+  {
+   "src": "/cda-viewer/icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png"
+  },
+  {
+   "src": "/cda-viewer/icon-512-maskable.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
+  }
+ ]
+}
