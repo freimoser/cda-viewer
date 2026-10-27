@@ -50,7 +50,7 @@ const text = (el) => (el ? el.textContent.replace(/\s+/g, " ").trim() : "");
 
 // ---------- Vorprüfung auf Wohlgeformtheit ----------
 // Chrome baut bei kaputtem XML ein <parsererror> mit Inline-Style; das löst unter der strengen CSP
-// (style-src 'self') zwei Konsolenhinweise aus. Deshalb prüft der Viewer die häufigsten Fehler selbst, bevor
+// (style-src 'self') zwei Konsolenhinweise aus. Deshalb prüft der Viewer bestimmte Fehler selbst, bevor
 // DOMParser läuft. Die Prüfung ist bewusst konservativ: Sie meldet nur eindeutige Fehler (nicht geschlossene
 // oder falsch verschachtelte Elemente, nacktes &, ungültige Attribute, fehlendes Wurzelelement). Alles andere
 // entscheidet weiterhin der DOMParser des Browsers.
@@ -118,13 +118,13 @@ export function parseCda(xmlText, DOMParserCtor) {
     // Ersatzzeichen deuten auf falsch gelesene Zeichenkodierung hin; kein harter Fehler
   }
   const wf = wellFormedError(xmlText);
-  if (wf) return fail("xml", "Die Datei ist kein wohlgeformtes XML.", "Meldung des Viewers: Zeile " + wf.line + ", Spalte " + wf.col + ": " + wf.msg + " Häufige Ursachen: abgeschnittene Datei, nicht escapte Zeichen (&, <) im Text oder eine Datei, die gar kein XML ist (z. B. PDF oder Pipe-Nachricht).");
+  if (wf) return fail("xml", "Die Datei ist kein wohlgeformtes XML.", "Meldung des Viewers: Zeile " + wf.line + ", Spalte " + wf.col + ": " + wf.msg + " Mögliche Ursachen: abgeschnittene Datei, nicht escapte Zeichen (&, <) im Text oder eine Datei, die gar kein XML ist (z. B. PDF oder Pipe-Nachricht).");
   let doc;
   try { doc = new DP().parseFromString(xmlText, "application/xml"); } catch (e) { return fail("xml", "Das XML konnte nicht gelesen werden.", String(e && e.message || e)); }
   const perr = doc.getElementsByTagName("parsererror")[0];
   if (perr || !doc.documentElement) {
     const msg = perr ? text(perr).slice(0, 300) : "Kein Wurzelelement gefunden.";
-    return fail("xml", "Die Datei ist kein wohlgeformtes XML.", "Meldung des Browsers: " + msg + " Häufige Ursachen: abgeschnittene Datei, nicht escapte Zeichen (&, <) im Text oder eine Datei, die gar kein XML ist (z. B. PDF oder Pipe-Nachricht).");
+    return fail("xml", "Die Datei ist kein wohlgeformtes XML.", "Meldung des Browsers: " + msg + " Mögliche Ursachen: abgeschnittene Datei, nicht escapte Zeichen (&, <) im Text oder eine Datei, die gar kein XML ist (z. B. PDF oder Pipe-Nachricht).");
   }
   const root = doc.documentElement;
   if (root.localName !== "ClinicalDocument") {
@@ -431,9 +431,9 @@ export function buildHints(parsed, header, sections) {
   const root = parsed.root;
   if (!parsed.nsOk) add("warn", `Das Wurzelelement liegt nicht im Namensraum „${NS_CDA}“ (gefunden: „${root.namespaceURI || "keiner"}“). CDA-Dokumente verwenden diesen Namensraum.`);
   if (!header.typeId) add("warn", "typeId fehlt. CDA R2 verlangt typeId mit root 2.16.840.1.113883.1.3 und extension POCD_HD000040.");
-  else if (header.typeId.root !== "2.16.840.1.113883.1.3" || header.typeId.extension !== "POCD_HD000040") add("warn", `typeId weicht vom üblichen Wert ab (${header.typeId.root} / ${header.typeId.extension}); erwartet: 2.16.840.1.113883.1.3 / POCD_HD000040.`);
+  else if (header.typeId.root !== "2.16.840.1.113883.1.3" || header.typeId.extension !== "POCD_HD000040") add("warn", `typeId weicht vom Wert für CDA R2 ab (${header.typeId.root} / ${header.typeId.extension}); erwartet: 2.16.840.1.113883.1.3 / POCD_HD000040.`);
   else add("ok", "typeId entspricht CDA R2 (POCD_HD000040).");
-  if (!header.realmCode.length) add("info", "Kein realmCode angegeben. Das ist laut CDA-Basisstandard optional; manche Leitfäden (z. B. US-C-CDA) verlangen ihn.");
+  if (!header.realmCode.length) add("info", "Kein realmCode angegeben. Das ist laut CDA-Basisstandard optional; der Leitfaden US-C-CDA verlangt ihn.");
   else add("info", `realmCode: ${header.realmCode.join(", ")}.`);
   if (!header.templateIds.length) add("info", "Keine templateId im Kopf. Ohne templateId lässt sich nicht erkennen, nach welchem Leitfaden das Dokument gebaut wurde; ein Dokument kann trotzdem gültiges CDA sein.");
   else add("ok", `${header.templateIds.length} templateId im Kopf (${header.templateIds.map((t) => t.root + (t.extension ? ":" + t.extension : "")).join(", ")}).`);

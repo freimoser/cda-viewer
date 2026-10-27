@@ -20,9 +20,9 @@ const pre = (s) => `<pre class="code"><code>${esc(s)}</code></pre>`;
 export const SAMPLES = [
   { id: "de-arztbrief-entlassbrief", file: "de-arztbrief-entlassbrief.xml", title: "Entlassbrief (fiktiv, Deutsch)", badge: "Eigenes Beispiel", source: "Eigenes, frei erfundenes Beispiel von Thomas Freimoser (MIT-Lizenz). Keine echten Patientendaten.", license: "MIT", text: "Fiktiver Krankenhaus-Entlassbrief in der Struktur eines deutschen Arztbriefs: Kopf mit Patientin, Autor und Verwahrer, Abschnitte mit Text und LOINC-Code, keine codierten Einträge (Level 2)." },
   { id: "de-arztbrief-facharzt-level3", file: "de-arztbrief-facharzt-level3.xml", title: "Facharztbrief mit Messwerten (fiktiv, Deutsch)", badge: "Eigenes Beispiel", source: "Eigenes, frei erfundenes Beispiel von Thomas Freimoser (MIT-Lizenz). Keine echten Patientendaten.", license: "MIT", text: "Fiktiver ambulanter Facharztbrief mit Level-3-Einträgen: Blutdruck, Herzfrequenz und Körpergewicht als Vitalwerte-Organizer sowie Laborwerte, jeweils mit Verweis auf die Tabellenzelle im Text." },
-  { id: "hl7-ccda-ccd", file: "hl7-ccda-ccd.xml", title: "Continuity of Care Document (C-CDA R2.1)", badge: "HL7 C-CDA-Examples, CC0", source: "HL7/C-CDA-Examples, C-CDA_R2_CCD_2.xml, Commit ad5007a, CC0 1.0. Eine E-Mail-Adresse wurde durch isabella.jones@example.org ersetzt.", license: "CC0 1.0", text: "US-amerikanisches Beispiel eines CCD aus dem offiziellen Beispielrepository der C-CDA-Arbeitsgruppe. Englisch, viele codierte Einträge." },
+  { id: "hl7-ccda-ccd", file: "hl7-ccda-ccd.xml", title: "Continuity of Care Document (C-CDA R2.1)", badge: "HL7 C-CDA-Examples, CC0", source: "HL7/C-CDA-Examples, C-CDA_R2_CCD_2.xml, Commit ad5007a, CC0 1.0. Eine E-Mail-Adresse wurde durch isabella.jones@example.org ersetzt.", license: "CC0 1.0", text: "US-amerikanisches Beispiel eines CCD aus dem Repository HL7/C-CDA-Examples. Englisch, mit codierten Einträgen." },
   { id: "hl7-ccda-discharge-summary", file: "hl7-ccda-discharge-summary.xml", title: "Discharge Summary (C-CDA R2.1)", badge: "HL7 C-CDA-Examples, CC0", source: "HL7/C-CDA-Examples, C-CDA_R2_Discharge_Summary.xml, Commit ad5007a, CC0 1.0.", license: "CC0 1.0", text: "Entlassbericht aus dem C-CDA-Beispielrepository: englischsprachig, mit Aufnahmediagnose, Allergien und weiteren Abschnitten." },
-  { id: "hl7-ccda-consultation-note", file: "hl7-ccda-consultation-note.xml", title: "Consultation Note (C-CDA R2.1)", badge: "HL7 C-CDA-Examples, CC0", source: "HL7/C-CDA-Examples, C-CDA_R2_Consultation_Note.xml, Commit ad5007a, CC0 1.0.", license: "CC0 1.0", text: "Konsiliarbericht aus dem C-CDA-Beispielrepository, das größte der Beispiele (rund 90 KB), mit Tabellen im Text und zahlreichen codierten Einträgen." },
+  { id: "hl7-ccda-consultation-note", file: "hl7-ccda-consultation-note.xml", title: "Consultation Note (C-CDA R2.1)", badge: "HL7 C-CDA-Examples, CC0", source: "HL7/C-CDA-Examples, C-CDA_R2_Consultation_Note.xml, Commit ad5007a, CC0 1.0.", license: "CC0 1.0", text: "Konsiliarbericht aus dem C-CDA-Beispielrepository, das größte der Beispiele (rund 90 KB), mit Tabellen im Text und codierten Einträgen." },
 ];
 
 const stat = (st, id) => st[id] || { sections: "?", entries: "?", level: "?" };
@@ -50,7 +50,7 @@ ${tools(status).map((t) => `<li><a href="${t.u}">${esc(t.t)}</a> – ${esc(t.d)}
 // ---------------------------------------------------------------- FAQ
 export const FAQ = [
   { q: "Was ist ein HL7-CDA-Dokument?", a: `<p>CDA (Clinical Document Architecture) ist ein XML-Standard von HL7 International für klinische Dokumente wie Arztbriefe oder Entlassbriefe. Ein CDA-Dokument besteht aus einem Header mit Patient, Autor, Dokumenttyp und Datum sowie einem Body aus Abschnitten mit lesbarem Text und optional codierten Einträgen. Mehr dazu unter ${L("was-ist-cda/", "Was ist HL7 CDA?")}.</p>` },
-  { q: "Wie öffne ich eine CDA-XML-Datei lesbar?", a: `<p>Ziehen Sie die Datei in das Feld oben oder fügen Sie den XML-Text ein. Der Viewer zeigt Kopf, Abschnitte und Text an; mit „Strukturdaten“ sehen Sie die codierten Einträge als Tabelle, mit „Roh-XML“ den Quelltext. Eine Anleitung mit typischen Fehlermeldungen steht unter ${L("cda-datei-oeffnen/", "CDA-Datei öffnen")}.</p>` },
+  { q: "Wie öffne ich eine CDA-XML-Datei lesbar?", a: `<p>Ziehen Sie die Datei in das Feld oben oder fügen Sie den XML-Text ein. Der Viewer zeigt Kopf, Abschnitte und Text an; mit „Strukturdaten“ sehen Sie die codierten Einträge als Tabelle, mit „Roh-XML“ den Quelltext. Eine Anleitung mit den Fehlermeldungen des Viewers steht unter ${L("cda-datei-oeffnen/", "CDA-Datei öffnen")}.</p>` },
   { q: "Ist HL7 v3 dasselbe wie CDA?", a: `<p>Nicht ganz. CDA Release 2 gehört zur „Familie“ der HL7-Version-3-Standards und beruht auf dem HL7-Referenz-Informationsmodell (RIM) (Quelle: ${a("vhitg")}). Mit v3-Nachrichten, die Daten zwischen Systemen austauschen, ist ein CDA-Dokument nicht identisch. Erkennt der Viewer ein v3-Nachrichtenelement als Wurzel, meldet er „Kein CDA-Dokument“ und nennt das gefundene Element.</p>` },
   { q: "Was bedeuten Level 1, 2 und 3 beim Arztbrief?", a: `<p>Level 1 ist ein lesbares XML-Dokument ohne codierte Struktur, Level 2 kennzeichnet zusätzlich die Abschnitte mit Codes, Level 3 enthält maschinenauswertbare Einzelinformationen (entry) (Quelle: ${a("vhitg")}, Kapitel 6.2). Der Viewer schätzt das Level aus dem Dokument; das ist ein Hinweis, keine Konformitätsaussage. Details: ${L("cda-arztbrief-lesen/", "Arztbrief lesen")}.</p>` },
   { q: "Ist der eArztbrief ein CDA-Dokument?", a: `<p>Die KBV-Richtlinie zum elektronischen Brief (in Kraft seit 17.05.2024) verlangt mindestens eine PDF/A-Datei und eine XML-Datei nach dem Implementierungsleitfaden „Arztbrief“ auf Basis von HL7 CDA Release 2, Version 1.50 vom 12.05.2006. Die XML-Datei darf sich auf Patient und Absender beschränken, der Body darf leer sein; der Inhalt steht dann im PDF (Quelle: ${a("kbv")}). Ein solcher Brief erscheint im Viewer mit Kopf und ohne Abschnitte.</p>` },
@@ -126,7 +126,7 @@ ${samplesCards(st)}
 <li>Ein in der Datei eingetragenes Stylesheet (<code>xml-stylesheet</code>) wird ignoriert. Die Darstellung ist die des Viewers, nicht die des Erzeugersystems.</li>
 <li>Eingebettete Medien (<code>renderMultiMedia</code>) und ein <code>nonXMLBody</code> mit PDF werden nicht angezeigt; der Viewer markiert die Stelle.</li>
 <li>Dateien über 15 MB und Dateien mit DOCTYPE- oder ENTITY-Deklaration werden abgelehnt.</li>
-<li>Codes werden so angezeigt, wie sie in der Datei stehen (Code, Codesystem, Anzeigename). Der Viewer übersetzt keine Codes und enthält nur eine kleine Liste häufiger Codesystem-OIDs.</li>
+<li>Codes werden so angezeigt, wie sie in der Datei stehen (Code, Codesystem, Anzeigename). Der Viewer übersetzt keine Codes und enthält nur eine kleine Liste bekannter Codesystem-OIDs.</li>
 </ul>
 </div>
 </section>
@@ -166,28 +166,28 @@ ${mdr()}
 <div class="content">
 <h2>In fünf Schritten</h2>
 <ol class="steps">
-<li><h3>Datei erkennen</h3><p>CDA-Dateien enden meist auf <code>.xml</code>. Öffnen Sie die Datei in einem Texteditor: Sie muss mit dem Element <code>ClinicalDocument</code> im Namensraum <code>urn:hl7-org:v3</code> beginnen.</p>${pre(`<?xml version="1.0" encoding="UTF-8"?>\n<ClinicalDocument xmlns="urn:hl7-org:v3">\n  <typeId root="2.16.840.1.113883.1.3" extension="POCD_HD000040"/>\n  <id root="…" extension="…"/>\n  <code code="…" codeSystem="2.16.840.1.113883.6.1"/>\n  …\n</ClinicalDocument>`)}</li>
+<li><h3>Datei erkennen</h3><p>Die Dateiendung allein sagt nichts über den Inhalt. Öffnen Sie die Datei in einem Texteditor: Sie muss mit dem Element <code>ClinicalDocument</code> im Namensraum <code>urn:hl7-org:v3</code> beginnen.</p>${pre(`<?xml version="1.0" encoding="UTF-8"?>\n<ClinicalDocument xmlns="urn:hl7-org:v3">\n  <typeId root="2.16.840.1.113883.1.3" extension="POCD_HD000040"/>\n  <id root="…" extension="…"/>\n  <code code="…" codeSystem="2.16.840.1.113883.6.1"/>\n  …\n</ClinicalDocument>`)}</li>
 <li><h3>Im Viewer öffnen</h3><p>Ziehen Sie die Datei in das Feld auf der ${L("#viewer", "Startseite")}, wählen Sie sie aus oder fügen Sie den XML-Text ein. Die Datei wird nicht übertragen.</p></li>
 <li><h3>Ansicht wählen</h3><p>„Dokument“ zeigt den Brief mit Inhaltsverzeichnis. „Strukturdaten“ listet Kopf und codierte Einträge als Tabellen. „Roh-XML“ zeigt den Quelltext, wahlweise eingerückt.</p></li>
 <li><h3>Hinweise lesen</h3><p>Über dem Dokument stehen Plausibilitätshinweise, etwa wenn Kopfbestandteile fehlen. Sie ersetzen keine Validierung.</p></li>
 <li><h3>Drucken oder als PDF sichern</h3><p>„Druckansicht“ öffnet den Druckdialog des Browsers. Gedruckt wird nur das Dokument. Wählen Sie dort „Als PDF speichern“, wenn Sie eine Datei brauchen.</p></li>
 </ol>
 <h2>Warum eine CDA-Datei im Browser unlesbar aussieht</h2>
-<p>CDA trennt Inhalt und Darstellung. Der Standard verlangt, dass jedes Dokument seine klinischen Informationen in lesbarer Form enthält, und dass sich der Inhalt mit „einem einzigen Stylesheet und marktüblichen Browsern“ darstellen lässt (Quelle: ${a("vhitg")}, Kapitel 3.3.6). Die Darstellung selbst liefert die Datei nicht mit. Üblich ist eine Verknüpfung zu einem XSL-Stylesheet über die Verarbeitungsanweisung <code>xml-stylesheet</code>. Die drei C-CDA-Beispiele von HL7 im Viewer enthalten genau diese Zeile mit <code>href="CDA.xsl"</code>. Liegt das Stylesheet nicht neben der Datei, bleibt dem Browser nur der Elementbaum.</p>
+<p>CDA trennt Inhalt und Darstellung. Der Standard verlangt, dass jedes Dokument seine klinischen Informationen in lesbarer Form enthält, und dass sich der Inhalt mit „einem einzigen Stylesheet und marktüblichen Browsern“ darstellen lässt (Quelle: ${a("vhitg")}, Kapitel 3.3.6). Die Darstellung selbst liefert die Datei nicht mit. Die Datei kann über die Verarbeitungsanweisung <code>xml-stylesheet</code> mit einem XSL-Stylesheet verknüpft sein. Die drei C-CDA-Beispiele von HL7 im Viewer enthalten genau diese Zeile mit <code>href="CDA.xsl"</code>. Liegt das Stylesheet nicht neben der Datei, bleibt dem Browser nur der Elementbaum.</p>
 <h2 id="xslt">Warum dieser Viewer ohne XSLT arbeitet</h2>
 <p>Chromium hat XSLT (einschließlich der <code>XSLTProcessor</code>-API und der Verarbeitungsanweisung <code>xml-stylesheet</code>) offiziell als veraltet erklärt. Nach der Planung von Chrome stoppt XSLT in Chrome 158 am 17. November 2026 für alle Nutzer außer Teilnehmern des Origin Trials und einer Enterprise Policy, in Chrome 176 am 17. August 2027 für alle. Firefox und WebKit haben ebenfalls Pläne zur Entfernung angedeutet (Quelle: ${a("chrome")}). Ein Verfahren, das nur auf einem Stylesheet im Browser beruht, kann damit ausfallen.</p>
 <p>Der CDA-Viewer liest die Datei deshalb mit dem XML-Parser des Browsers (<code>DOMParser</code>) und erzeugt die Ansicht mit eigenem Code. Das hat zwei Folgen: Er braucht kein Stylesheet, und er kann den Text der Abschnitte streng filtern. Aus dem Narrativtext übernimmt er nur eine feste Liste von Elementen (Absätze, Listen, Tabellen, Hervorhebungen, Links mit http, https oder mailto). Skripte, Formulare, Bilder und unbekannte Elemente erscheinen nicht; bei unbekannten Elementen bleibt nur der Text.</p>
-<h2 id="fehler">Häufige Fehler und was sie bedeuten</h2>
+<h2 id="fehler">Fehlermeldungen und was sie bedeuten</h2>
 <p>Die Meldungen unten stammen aus dem Viewer. Fehler erscheinen als Klartext im Statusbereich über der Ansicht, nicht als Skriptfehler.</p>
 <dl class="errlist">
 <dt>${code("Die Datei ist kein wohlgeformtes XML.")}</dt>
-<dd>Der Viewer prüft zuerst selbst auf die häufigsten Fehler (nicht geschlossene Elemente, nacktes <code>&amp;</code>, fehlendes Wurzelelement) und nennt Zeile und Spalte. Bei anderen Fehlern gilt die Meldung des XML-Parsers im Browser. Häufige Ursachen: abgeschnittene Datei, nicht maskierte Zeichen wie <code>&amp;</code> oder <code>&lt;</code> im Text, oder die Datei ist gar kein XML (zum Beispiel ein PDF oder eine HL7-v2-Nachricht mit senkrechten Strichen).</dd>
+<dd>Der Viewer prüft zuerst selbst auf bestimmte Fehler (nicht geschlossene Elemente, nacktes <code>&amp;</code>, fehlendes Wurzelelement) und nennt Zeile und Spalte. Bei anderen Fehlern gilt die Meldung des XML-Parsers im Browser. Mögliche Ursachen: abgeschnittene Datei, nicht maskierte Zeichen wie <code>&amp;</code> oder <code>&lt;</code> im Text, oder die Datei ist gar kein XML (zum Beispiel ein PDF oder eine HL7-v2-Nachricht mit senkrechten Strichen).</dd>
 <dt>${code("Kein CDA-Dokument: Wurzelelement ist „Bundle“.")}</dt>
 <dd>Das Wurzelelement ist nicht <code>ClinicalDocument</code>. Bei <code>Bundle</code> oder <code>Composition</code> handelt es sich um FHIR, bei Elementen wie <code>PRPA_IN201301UV02</code> um eine HL7-v3-Nachricht. Beides sind keine CDA-Dokumente. Zum Unterschied siehe ${L("was-ist-cda/", "Was ist HL7 CDA?")}.</dd>
 <dt>${code("Die Datei enthält eine DOCTYPE- oder ENTITY-Deklaration und wird nicht geladen.")}</dt>
 <dd>CDA-Dokumente brauchen keine DOCTYPE-Deklaration. Der Viewer lädt solche Dateien nicht, um Angriffe über Entity-Expansion auszuschließen. Entfernen Sie die Zeile, wenn Sie der Datei vertrauen.</dd>
 <dt>${code("Die Datei ist größer als 15 MB.")}</dt>
-<dd>Der Viewer ist für Dokumente im Bereich weniger Megabyte gedacht. Große Dateien enthalten oft eingebettete Anhänge, etwa ein PDF in einem <code>nonXMLBody</code>.</dd>
+<dd>Der Viewer ist für Dokumente im Bereich weniger Megabyte gedacht. Große Dateien können eingebettete Anhänge enthalten, etwa ein PDF in einem <code>nonXMLBody</code>.</dd>
 <dt>${code("Das Wurzelelement liegt nicht im Namensraum „urn:hl7-org:v3“")}</dt>
 <dd>Das Dokument heißt zwar <code>ClinicalDocument</code>, hat aber keinen oder einen anderen Namensraum. Der Viewer zeigt es trotzdem an und warnt. Prüfen Sie das Attribut <code>xmlns</code> am Wurzelelement.</dd>
 <dt>${code("Der structuredBody enthält keine Abschnitte (section).")}</dt>
@@ -267,7 +267,7 @@ ${src("vhitg")}
 ${src("vhitg")}
 <h2 id="level">Level 1, 2 und 3</h2>
 <ul>
-<li><strong>Level 1:</strong> ein XML-Dokument, das auf „menschliche Interoperabilität“ zielt, also vor allem lesbar ist. Es gibt keine Einschränkung für Inhalt und Zweck.</li>
+<li><strong>Level 1:</strong> ein XML-Dokument, das auf „menschliche Interoperabilität“ zielt. Es gibt keine Einschränkung für Inhalt und Zweck.</li>
 <li><strong>Level 2:</strong> die Abschnitte sind zusätzlich durch Codes klassifiziert, in der Arztbrief-Spezifikation durch LOINC-Codes.</li>
 <li><strong>Level 3:</strong> zusätzlich enthalten die Abschnitte maschinenauswertbare Einzelinformationen (entry), etwa einen systolischen Blutdruck als Beobachtung. Eine Anwendung kann damit einzelne Beobachtungen, Prozeduren oder Medikationen identifizieren und verarbeiten.</li>
 </ul>
@@ -302,7 +302,7 @@ export function whatPage(toolStatus) {
 <p class="lead">HL7 CDA ist ein XML-Standard für klinische Dokumente wie Entlassbriefe, Überweisungen, Behandlungsdokumentation oder OP-Berichte. Diese Seite ordnet CDA, C-CDA, HL7 v3 und FHIR ein. Die Datei selbst lesen Sie im ${L("", "CDA-Viewer")}.</p>
 <div class="content">
 <h2>Definition</h2>
-<p>Die Clinical Document Architecture ist laut VHitG-Leitfaden ein Standard für den Austausch und die Speicherung klinischer Dokumentation; sie nutzt XML und wird von HL7 entwickelt. CDA Release 1 wurde im September 2000 verabschiedet, CDA Release 2 im Juli 2005 zum ANSI-Standard erhoben (Quelle: ${a("vhitg")}, Kapitel 3.2). Heute meint „CDA“ im Alltag fast immer Release 2 (CDA R2).</p>
+<p>Die Clinical Document Architecture ist laut VHitG-Leitfaden ein Standard für den Austausch und die Speicherung klinischer Dokumentation; sie nutzt XML und wird von HL7 entwickelt. CDA Release 1 wurde im September 2000 verabschiedet, CDA Release 2 im Juli 2005 zum ANSI-Standard erhoben (Quelle: ${a("vhitg")}, Kapitel 3.2). Dieser Viewer liest Dokumente nach CDA Release 2 (CDA R2).</p>
 <p>Die Abkürzung CDA wird auch in anderen Bereichen verwendet; auf dieser Seite ist immer HL7 CDA gemeint.</p>
 <h2>Sechs Eigenschaften eines CDA-Dokuments</h2>
 <p>Der Standard nennt sechs Kerneigenschaften (Quelle: ${a("vhitg")}, Kapitel 3.3):</p>
@@ -350,15 +350,15 @@ export function privacyPage() {
 <h2>Verantwortlicher</h2>
 <p>Thomas Freimoser, München / Remote. Kontakt: <a href="mailto:kontakt@freimoser.de">kontakt@freimoser.de</a>. Vollständige Angaben im <a href="${SITE.impressum}">Impressum</a>.</p>
 <h2>Ihre Dateien</h2>
-<p>CDA-Dateien und eingefügter XML-Text werden ausschließlich lokal in Ihrem Browser verarbeitet. Es gibt keine Übertragung an einen Server und keinen Server, der solche Daten empfangen könnte. Die Seite setzt eine Content-Security-Policy, die Netzwerkverbindungen der Seite (<code>connect-src 'none'</code>), fremde Skripte und fremde Ressourcen verbietet. Die Beispieldokumente sind in die Seite eingebettet. Links, die in einem Dokument stehen, öffnen sich erst, wenn Sie sie anklicken.</p>
+<p>CDA-Dateien und eingefügter XML-Text werden ausschließlich lokal in Ihrem Browser verarbeitet. Der Viewer hat keine Upload-Funktion und überträgt Dateiinhalte nicht. Die Seite setzt eine Content-Security-Policy, die Netzwerkverbindungen der Seite (<code>connect-src 'none'</code>), fremde Skripte und fremde Ressourcen verbietet. Die Beispieldokumente sind in die Seite eingebettet. Links, die in einem Dokument stehen, öffnen sich erst, wenn Sie sie anklicken.</p>
 <h2>Cookies, Speicher und Tracking</h2>
 <p>Die Seite setzt keine Cookies, nutzt weder localStorage noch sessionStorage und enthält keine Reichweitenmessung. Schriften, Skripte und Bilder werden nicht von Dritten geladen.</p>
 <h2>Hosting</h2>
-<p>Die Seite wird über GitHub Pages (GitHub Inc.) ausgeliefert. Beim Aufruf verarbeitet GitHub technisch notwendige Verbindungsdaten wie IP-Adresse, Zeitpunkt und angeforderte Datei, um die Seite bereitzustellen und abzusichern (Art. 6 Abs. 1 lit. f DSGVO). Einzelheiten: <a href="https://docs.github.com/de/site-policy/privacy-policies/github-general-privacy-statement">Datenschutzerklärung von GitHub</a>.</p>
+<p>Die Seite wird über GitHub Pages (GitHub Inc.) ausgeliefert. Beim Aufruf verarbeitet GitHub Verbindungsdaten wie IP-Adresse, Zeitpunkt und angeforderte Datei. Dafür gilt die Datenschutzerklärung des Hosters: <a href="https://docs.github.com/de/site-policy/privacy-policies/github-general-privacy-statement">Datenschutzerklärung von GitHub</a>.</p>
 <h2>Google Search Console und Bing Webmaster Tools</h2>
-<p>Die Seite enthält Bestätigungs-Meta-Tags für diese Dienste. Dabei werden keine Daten von Besucherinnen und Besuchern übertragen.</p>
-<h2>Ihre Rechte</h2>
-<p>Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch sowie das Recht, sich bei einer Datenschutz-Aufsichtsbehörde zu beschweren.</p>
+<p>Die Seite enthält Bestätigungs-Meta-Tags für diese Dienste. Die Tags selbst übertragen keine Daten von Besucherinnen und Besuchern.</p>
+<h2>Gespeicherte Daten und Anfragen</h2>
+<p>Wir speichern keine personenbezogenen Daten von Ihnen. Schreiben Sie uns per E-Mail, verwenden wir Ihre Angaben nur, um Ihre Nachricht zu beantworten. Für Fragen zu Ihren Daten wenden Sie sich an kontakt@freimoser.de.</p>
 </div>`;
   return p;
 }

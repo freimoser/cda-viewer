@@ -60,7 +60,7 @@
 <div class="content">
 <h2>In fünf Schritten</h2>
 <ol class="steps">
-<li><h3>Datei erkennen</h3><p>CDA-Dateien enden meist auf <code>.xml</code>. Öffnen Sie die Datei in einem Texteditor: Sie muss mit dem Element <code>ClinicalDocument</code> im Namensraum <code>urn:hl7-org:v3</code> beginnen.</p><pre class="code"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+<li><h3>Datei erkennen</h3><p>Die Dateiendung allein sagt nichts über den Inhalt. Öffnen Sie die Datei in einem Texteditor: Sie muss mit dem Element <code>ClinicalDocument</code> im Namensraum <code>urn:hl7-org:v3</code> beginnen.</p><pre class="code"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;ClinicalDocument xmlns=&quot;urn:hl7-org:v3&quot;&gt;
   &lt;typeId root=&quot;2.16.840.1.113883.1.3&quot; extension=&quot;POCD_HD000040&quot;/&gt;
   &lt;id root=&quot;…&quot; extension=&quot;…&quot;/&gt;
@@ -73,21 +73,21 @@
 <li><h3>Drucken oder als PDF sichern</h3><p>„Druckansicht“ öffnet den Druckdialog des Browsers. Gedruckt wird nur das Dokument. Wählen Sie dort „Als PDF speichern“, wenn Sie eine Datei brauchen.</p></li>
 </ol>
 <h2>Warum eine CDA-Datei im Browser unlesbar aussieht</h2>
-<p>CDA trennt Inhalt und Darstellung. Der Standard verlangt, dass jedes Dokument seine klinischen Informationen in lesbarer Form enthält, und dass sich der Inhalt mit „einem einzigen Stylesheet und marktüblichen Browsern“ darstellen lässt (Quelle: <a href="https://download.hl7.de/documents/cdar2-arztbrief/Leitfaden-VHitG-Arztbrief-v150.pdf">VHitG-Arztbrief-Leitfaden v1.50 (HL7 Deutschland)</a>, Kapitel 3.3.6). Die Darstellung selbst liefert die Datei nicht mit. Üblich ist eine Verknüpfung zu einem XSL-Stylesheet über die Verarbeitungsanweisung <code>xml-stylesheet</code>. Die drei C-CDA-Beispiele von HL7 im Viewer enthalten genau diese Zeile mit <code>href="CDA.xsl"</code>. Liegt das Stylesheet nicht neben der Datei, bleibt dem Browser nur der Elementbaum.</p>
+<p>CDA trennt Inhalt und Darstellung. Der Standard verlangt, dass jedes Dokument seine klinischen Informationen in lesbarer Form enthält, und dass sich der Inhalt mit „einem einzigen Stylesheet und marktüblichen Browsern“ darstellen lässt (Quelle: <a href="https://download.hl7.de/documents/cdar2-arztbrief/Leitfaden-VHitG-Arztbrief-v150.pdf">VHitG-Arztbrief-Leitfaden v1.50 (HL7 Deutschland)</a>, Kapitel 3.3.6). Die Darstellung selbst liefert die Datei nicht mit. Die Datei kann über die Verarbeitungsanweisung <code>xml-stylesheet</code> mit einem XSL-Stylesheet verknüpft sein. Die drei C-CDA-Beispiele von HL7 im Viewer enthalten genau diese Zeile mit <code>href="CDA.xsl"</code>. Liegt das Stylesheet nicht neben der Datei, bleibt dem Browser nur der Elementbaum.</p>
 <h2 id="xslt">Warum dieser Viewer ohne XSLT arbeitet</h2>
 <p>Chromium hat XSLT (einschließlich der <code>XSLTProcessor</code>-API und der Verarbeitungsanweisung <code>xml-stylesheet</code>) offiziell als veraltet erklärt. Nach der Planung von Chrome stoppt XSLT in Chrome 158 am 17. November 2026 für alle Nutzer außer Teilnehmern des Origin Trials und einer Enterprise Policy, in Chrome 176 am 17. August 2027 für alle. Firefox und WebKit haben ebenfalls Pläne zur Entfernung angedeutet (Quelle: <a href="https://developer.chrome.com/docs/web-platform/deprecating-xslt">Chrome for Developers, Removing XSLT for a more secure browser</a>). Ein Verfahren, das nur auf einem Stylesheet im Browser beruht, kann damit ausfallen.</p>
 <p>Der CDA-Viewer liest die Datei deshalb mit dem XML-Parser des Browsers (<code>DOMParser</code>) und erzeugt die Ansicht mit eigenem Code. Das hat zwei Folgen: Er braucht kein Stylesheet, und er kann den Text der Abschnitte streng filtern. Aus dem Narrativtext übernimmt er nur eine feste Liste von Elementen (Absätze, Listen, Tabellen, Hervorhebungen, Links mit http, https oder mailto). Skripte, Formulare, Bilder und unbekannte Elemente erscheinen nicht; bei unbekannten Elementen bleibt nur der Text.</p>
-<h2 id="fehler">Häufige Fehler und was sie bedeuten</h2>
+<h2 id="fehler">Fehlermeldungen und was sie bedeuten</h2>
 <p>Die Meldungen unten stammen aus dem Viewer. Fehler erscheinen als Klartext im Statusbereich über der Ansicht, nicht als Skriptfehler.</p>
 <dl class="errlist">
 <dt><code>Die Datei ist kein wohlgeformtes XML.</code></dt>
-<dd>Der Viewer prüft zuerst selbst auf die häufigsten Fehler (nicht geschlossene Elemente, nacktes <code>&amp;</code>, fehlendes Wurzelelement) und nennt Zeile und Spalte. Bei anderen Fehlern gilt die Meldung des XML-Parsers im Browser. Häufige Ursachen: abgeschnittene Datei, nicht maskierte Zeichen wie <code>&amp;</code> oder <code>&lt;</code> im Text, oder die Datei ist gar kein XML (zum Beispiel ein PDF oder eine HL7-v2-Nachricht mit senkrechten Strichen).</dd>
+<dd>Der Viewer prüft zuerst selbst auf bestimmte Fehler (nicht geschlossene Elemente, nacktes <code>&amp;</code>, fehlendes Wurzelelement) und nennt Zeile und Spalte. Bei anderen Fehlern gilt die Meldung des XML-Parsers im Browser. Mögliche Ursachen: abgeschnittene Datei, nicht maskierte Zeichen wie <code>&amp;</code> oder <code>&lt;</code> im Text, oder die Datei ist gar kein XML (zum Beispiel ein PDF oder eine HL7-v2-Nachricht mit senkrechten Strichen).</dd>
 <dt><code>Kein CDA-Dokument: Wurzelelement ist „Bundle“.</code></dt>
 <dd>Das Wurzelelement ist nicht <code>ClinicalDocument</code>. Bei <code>Bundle</code> oder <code>Composition</code> handelt es sich um FHIR, bei Elementen wie <code>PRPA_IN201301UV02</code> um eine HL7-v3-Nachricht. Beides sind keine CDA-Dokumente. Zum Unterschied siehe <a href="/cda-viewer/was-ist-cda/">Was ist HL7 CDA?</a>.</dd>
 <dt><code>Die Datei enthält eine DOCTYPE- oder ENTITY-Deklaration und wird nicht geladen.</code></dt>
 <dd>CDA-Dokumente brauchen keine DOCTYPE-Deklaration. Der Viewer lädt solche Dateien nicht, um Angriffe über Entity-Expansion auszuschließen. Entfernen Sie die Zeile, wenn Sie der Datei vertrauen.</dd>
 <dt><code>Die Datei ist größer als 15 MB.</code></dt>
-<dd>Der Viewer ist für Dokumente im Bereich weniger Megabyte gedacht. Große Dateien enthalten oft eingebettete Anhänge, etwa ein PDF in einem <code>nonXMLBody</code>.</dd>
+<dd>Der Viewer ist für Dokumente im Bereich weniger Megabyte gedacht. Große Dateien können eingebettete Anhänge enthalten, etwa ein PDF in einem <code>nonXMLBody</code>.</dd>
 <dt><code>Das Wurzelelement liegt nicht im Namensraum „urn:hl7-org:v3“</code></dt>
 <dd>Das Dokument heißt zwar <code>ClinicalDocument</code>, hat aber keinen oder einen anderen Namensraum. Der Viewer zeigt es trotzdem an und warnt. Prüfen Sie das Attribut <code>xmlns</code> am Wurzelelement.</dd>
 <dt><code>Der structuredBody enthält keine Abschnitte (section).</code></dt>

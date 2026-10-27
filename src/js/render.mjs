@@ -223,7 +223,7 @@ export function hintsView(doc, r) {
   const det = h(doc, "details", { class: "hints", open: r.hints.some((x) => x.level === "warn") });
   const warn = r.hints.filter((x) => x.level === "warn").length;
   det.appendChild(h(doc, "summary", { text: `Plausibilitätshinweise (${r.hints.length}${warn ? ", davon " + warn + " Warnung" + (warn > 1 ? "en" : "") : ""})` }));
-  det.appendChild(h(doc, "p", { class: "muted", text: "Das sind einfache Prüfungen auf typische Bestandteile. Es ist keine Schematron- oder Konformitätsprüfung gegen einen Leitfaden und ersetzt keine." }));
+  det.appendChild(h(doc, "p", { class: "muted", text: "Das sind einfache Prüfungen auf bestimmte Bestandteile. Es ist keine Schematron- oder Konformitätsprüfung gegen einen Leitfaden und ersetzt keine." }));
   const ul = h(doc, "ul", { class: "hintlist" });
   for (const x of r.hints) ul.appendChild(h(doc, "li", { class: "h-" + x.level }, h(doc, "span", { class: "tag", text: x.level === "warn" ? "Warnung" : x.level === "ok" ? "OK" : "Hinweis" }), " " + x.text));
   det.appendChild(ul);

@@ -132,7 +132,7 @@ export const breadcrumbLd = (items) => ({ "@context": "https://schema.org", "@ty
 export const personLd = () => ({ "@type": "Person", "@id": SITE.author.url + "#person", name: SITE.author.name, url: SITE.author.url, sameAs: [SITE.author.linkedin] });
 
 const strip = (s) => s.replace(/<[^>]+>/g, "").replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&nbsp;/g, " ").replace(/\s+/g, " ").trim();
-export const faqHtml = (faq, id = "faq") => `<section aria-labelledby="${id}"><h2 id="${id}">Häufige Fragen</h2>
+export const faqHtml = (faq, id = "faq") => `<section aria-labelledby="${id}"><h2 id="${id}">Fragen und Antworten</h2>
 ${faq.map((f) => `<details class="faq"><summary>${esc(f.q)}</summary><div>${f.a}</div></details>`).join("\n")}
 </section>`;
 export const faqLd = (faq) => ({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faq.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: strip(f.a) } })) });
